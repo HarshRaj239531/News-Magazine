@@ -8,7 +8,7 @@
     @if(count($ticker) > 0)
     <section class="news-marquee-section">
         <div class="container marquee-container">
-            <span class="marquee-label">Samachar Flash</span>
+            <span class="marquee-label">{{ __('Samachar Flash') }}</span>
             <div class="marquee-content">
                 <span class="marquee-text">
                     @foreach($ticker as $t)
@@ -25,10 +25,10 @@
         <div class="slide-item" style="background: linear-gradient(135deg, #132b5b 0%, #0f1e3d 100%);">
             <div class="container">
                 <div class="slide-caption">
-                    <span class="slide-tag">Cover Story</span>
-                    <h2>VIGYANMEV JAYATE - विज्ञानमेव जयते</h2>
-                    <p>National Hindi-English Scientific Magazine of India, promoting scientific temper and technological awareness under the PRGI Ministry of Information & Broadcasting.</p>
-                    <a href="{{ route('news.detail', 'about-us') }}" class="btn-primary">Learn More & Explore</a>
+                    <span class="slide-tag">{{ __('Cover Story') }}</span>
+                    <h2>{{ __('Vigyanmev Jayate') }} - विज्ञानमेव जयते</h2>
+                    <p>{{ __('National Hindi-English Science & Technology Publication') }}, promoting scientific temper and technological awareness.</p>
+                    <a href="{{ route('news.detail', 'about-us') }}" class="btn-primary">{{ __('Learn More & Explore') }}</a>
                 </div>
             </div>
         </div>
@@ -39,8 +39,8 @@
         <div class="container">
             
             <div class="dashboard-title">
-                <h2>Featured Scientific Highlights & News</h2>
-                <p>Latest announcements, project developments, and honours list</p>
+                <h2>{{ __('Featured Scientific Highlights & News') }}</h2>
+                <p>{{ __('Latest announcements, project developments, and honours list') }}</p>
             </div>
 
             <div class="dashboard-grid">
@@ -48,7 +48,7 @@
                 <!-- Left: News Cards & Projects -->
                 <div class="left-content-area">
                     
-                    <h3 id="news" style="margin-bottom: 20px; border-left: 4px solid var(--accent-color); padding-left: 10px;">Latest News / समाचार</h3>
+                    <h3 id="news" style="margin-bottom: 20px; border-left: 4px solid var(--accent-color); padding-left: 10px;">{{ __('Latest News / समाचार') }}</h3>
                     <div class="news-cards-grid">
                         @forelse($news as $n)
                             <div class="news-card">
@@ -59,16 +59,16 @@
                                     <span class="news-date">📅 {{ $n->created_at->format('M d, Y') }}</span>
                                     <h3>{{ $n->title }}</h3>
                                     <p>{{ Str::limit(strip_tags($n->content), 120) }}</p>
-                                    <a href="{{ route('news.detail', $n->slug) }}" class="read-more-link">Read Full Page ➜</a>
+                                    <a href="{{ route('news.detail', $n->slug) }}" class="read-more-link">{{ __('Read Full Page') }} ➜</a>
                                 </div>
                             </div>
                         @empty
-                            <p>No news articles found. Add some from the Admin Panel!</p>
+                            <p>{{ __('No news articles found. Add some from the Admin Panel!') }}</p>
                         @endforelse
                     </div>
 
                     <!-- Projects Section -->
-                    <h3 style="margin: 40px 0 20px; border-left: 4px solid var(--accent-color); padding-left: 10px;">Our Projects Details / हमारे प्रोजेक्ट्स</h3>
+                    <h3 style="margin: 40px 0 20px; border-left: 4px solid var(--accent-color); padding-left: 10px;">{{ __('Our Projects Details / हमारे प्रोजेक्ट्स') }}</h3>
                     <div class="news-cards-grid">
                         @forelse($projects as $p)
                             <div class="news-card">
@@ -79,11 +79,11 @@
                                     <span class="news-date">📅 Updated {{ $p->updated_at->format('M d, Y') }}</span>
                                     <h3>{{ $p->title }}</h3>
                                     <p>{{ Str::limit(strip_tags($p->content), 120) }}</p>
-                                    <a href="{{ route('news.detail', $p->slug) }}" class="read-more-link">Project Details ➜</a>
+                                    <a href="{{ route('news.detail', $p->slug) }}" class="read-more-link">{{ __('Project Details') }} ➜</a>
                                 </div>
                             </div>
                         @empty
-                            <p>No projects found. Add projects from the Admin Panel!</p>
+                            <p>{{ __('No projects found. Add projects from the Admin Panel!') }}</p>
                         @endforelse
                     </div>
 
@@ -94,29 +94,29 @@
                     
                     <div class="sidebar-panel">
                         <div class="panel-header">
-                            <h3>Notice Board</h3>
-                            <span style="font-size: 0.75rem; background-color: var(--accent-color); color: white; padding: 2px 6px; border-radius: 3px; font-weight: bold;">Active</span>
+                            <h3>{{ __('Notice Board') }}</h3>
+                            <span style="font-size: 0.75rem; background-color: var(--accent-color); color: white; padding: 2px 6px; border-radius: 3px; font-weight: bold;">{{ __('Active') }}</span>
                         </div>
                         <ul class="notice-list">
                             @forelse($honours as $h)
                                 <li class="notice-item">
                                     <a href="{{ route('news.detail', $h->slug) }}">{{ $h->title }}</a>
-                                    <div class="notice-date">🏆 Honors Recognition</div>
+                                    <div class="notice-date">🏆 {{ __('Honors Recognition') }}</div>
                                 </li>
                             @empty
-                                <li class="notice-item">No active notices at this time.</li>
+                                <li class="notice-item">{{ __('No active notices at this time.') }}</li>
                             @endforelse
                         </ul>
                     </div>
 
                     <div class="sidebar-panel" style="margin-top: 30px; background-color: var(--primary-color); color: white;">
-                        <h3 style="color: var(--accent-gold); margin-bottom: 15px; text-transform: uppercase; font-size: 1.1rem; border-bottom: 1px solid #1e3a8a; padding-bottom: 8px;">Quick Shortcuts</h3>
+                        <h3 style="color: var(--accent-gold); margin-bottom: 15px; text-transform: uppercase; font-size: 1.1rem; border-bottom: 1px solid #1e3a8a; padding-bottom: 8px;">{{ __('Quick Shortcuts') }}</h3>
                         <ul class="footer-links" style="list-style: none;">
-                            <li style="margin-bottom: 12px;"><a href="{{ route('directory.show', 'national-parliamentary-board') }}" style="color: white; font-weight: 500;">✓ National Parliamentary Board</a></li>
-                            <li style="margin-bottom: 12px;"><a href="{{ route('directory.show', 'prime-editor') }}" style="color: white; font-weight: 500;">✓ Prime Editor Details</a></li>
-                            <li style="margin-bottom: 12px;"><a href="{{ route('directory.show', 'advocates') }}" style="color: white; font-weight: 500;">✓ Legal Advisors List</a></li>
-                            <li style="margin-bottom: 12px;"><a href="{{ route('directory.show', 'engineers') }}" style="color: white; font-weight: 500;">✓ Software Engineers Group</a></li>
-                            <li style="margin-bottom: 12px;"><a href="{{ route('payments') }}" style="color: var(--accent-gold); font-weight: 700;">💳 Online Subscription Payment</a></li>
+                            <li style="margin-bottom: 12px;"><a href="{{ route('directory.show', 'national-parliamentary-board') }}" style="color: white; font-weight: 500;">{{ __('✓ National Parliamentary Board') }}</a></li>
+                            <li style="margin-bottom: 12px;"><a href="{{ route('directory.show', 'prime-editor') }}" style="color: white; font-weight: 500;">{{ __('✓ Prime Editor Details') }}</a></li>
+                            <li style="margin-bottom: 12px;"><a href="{{ route('directory.show', 'advocates') }}" style="color: white; font-weight: 500;">{{ __('✓ Legal Advisors List') }}</a></li>
+                            <li style="margin-bottom: 12px;"><a href="{{ route('directory.show', 'engineers') }}" style="color: white; font-weight: 500;">{{ __('✓ Software Engineers Group') }}</a></li>
+                            <li style="margin-bottom: 12px;"><a href="{{ route('payments') }}" style="color: var(--accent-gold); font-weight: 700;">{{ __('💳 Online Subscription Payment') }}</a></li>
                         </ul>
                     </div>
 

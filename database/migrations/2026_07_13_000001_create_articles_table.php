@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('content');
             $table->string('image_path')->nullable();
             $table->string('status')->default('published'); // draft, published
+            $table->string('locale')->default('en'); // en, hi
             $table->timestamps();
         });
     }

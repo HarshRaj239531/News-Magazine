@@ -1,0 +1,2 @@
+Place your official circular blue logo image here.
+Rename the image file to "logo.png" so the website header displays it automatically.

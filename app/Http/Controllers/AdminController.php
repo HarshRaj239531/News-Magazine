@@ -46,6 +46,7 @@ class AdminController extends Controller
             'content' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|string|in:draft,published',
+            'locale' => 'required|string|in:en,hi',
         ]);
 
         $validated['slug'] = Str::slug($validated['title']);
@@ -82,6 +83,7 @@ class AdminController extends Controller
             'content' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|string|in:draft,published',
+            'locale' => 'required|string|in:en,hi',
         ]);
 
         if ($validated['title'] !== $article->title) {
@@ -154,6 +156,7 @@ class AdminController extends Controller
             'district' => 'nullable|string|max:255',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:1024',
             'contact_info' => 'nullable|string',
+            'locale' => 'required|string|in:en,hi',
         ]);
 
         if ($request->hasFile('photo')) {
@@ -185,6 +188,7 @@ class AdminController extends Controller
             'district' => 'nullable|string|max:255',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:1024',
             'contact_info' => 'nullable|string',
+            'locale' => 'required|string|in:en,hi',
         ]);
 
         if ($request->hasFile('photo')) {

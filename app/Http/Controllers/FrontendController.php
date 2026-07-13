@@ -15,24 +15,28 @@ class FrontendController extends Controller
     {
         $news = Article::where('category', 'news')
             ->where('status', 'published')
+            ->where('locale', app()->getLocale())
             ->latest()
             ->take(6)
             ->get();
 
         $projects = Article::where('category', 'projects')
             ->where('status', 'published')
+            ->where('locale', app()->getLocale())
             ->latest()
             ->take(4)
             ->get();
 
         $honours = Article::where('category', 'honours')
             ->where('status', 'published')
+            ->where('locale', app()->getLocale())
             ->latest()
             ->take(3)
             ->get();
 
-        // Get a ticker list of recent titles
+        // Get a ticker list of recent titles for the active locale
         $ticker = Article::where('status', 'published')
+            ->where('locale', app()->getLocale())
             ->latest()
             ->take(5)
             ->pluck('title');
@@ -61,11 +65,18 @@ class FrontendController extends Controller
         }
 
         $title = $categoryMap[$category];
-        $members = Member::where('category', $category)->latest()->get();
+        $members = Member::where('category', $category)
+            ->where('locale', app()->getLocale())
+            ->latest()
+            ->get();
 
         // Check if category is specialized (like epapers, gallery, etc.)
         if ($category === 'e-papers-magazines') {
-            $epapers = Article::where('category', 'epaper')->where('status', 'published')->latest()->get();
+            $epapers = Article::where('category', 'epaper')
+                ->where('status', 'published')
+                ->where('locale', app()->getLocale())
+                ->latest()
+                ->get();
             return view('frontend.epapers', compact('epapers', 'title'));
         }
 

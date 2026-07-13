@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('district')->nullable();
             $table->string('photo_path')->nullable();
             $table->text('contact_info')->nullable();
+            $table->string('locale')->default('en'); // en, hi
             $table->timestamps();
         });
     }

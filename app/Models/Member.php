@@ -17,5 +17,6 @@ class Member extends Model
         'district',
         'photo_path',
         'contact_info',
+        'locale',
     ];
 }

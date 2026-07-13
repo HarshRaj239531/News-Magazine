@@ -15,6 +15,12 @@ Route::get('/news/{slug}', [FrontendController::class, 'newsDetail'])->name('new
 Route::get('/directories/{category}', [FrontendController::class, 'directory'])->name('directory.show');
 Route::get('/online-payments', [FrontendController::class, 'payments'])->name('payments');
 Route::get('/contact-us', [FrontendController::class, 'contact'])->name('contact');
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'hi'])) {
+        session(['locale' => $locale]);
+    }
+    return redirect()->back();
+})->name('lang.switch');
 
 /*
 |--------------------------------------------------------------------------

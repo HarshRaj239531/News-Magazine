@@ -35,16 +35,26 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="category">Directory Category / श्रेणी</label>
-                <select name="category" id="category" class="form-control" required>
-                    <option value="">-- Select Board / Press Club Directory --</option>
-                    @foreach($categories as $key => $value)
-                        <option value="{{ $key }}" {{ old('category', $member->category) == $key ? 'selected' : '' }}>
-                            {{ $value }}
-                        </option>
-                    @endforeach
-                </select>
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    <label for="category">Directory Category / श्रेणी</label>
+                    <select name="category" id="category" class="form-control" required>
+                        <option value="">-- Select Board / Press Club Directory --</option>
+                        @foreach($categories as $key => $value)
+                            <option value="{{ $key }}" {{ old('category', $member->category) == $key ? 'selected' : '' }}>
+                                {{ $value }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="locale">Language / भाषा</label>
+                    <select name="locale" id="locale" class="form-control" required>
+                        <option value="en" {{ old('locale', $member->locale) == 'en' ? 'selected' : '' }}>English</option>
+                        <option value="hi" {{ old('locale', $member->locale) == 'hi' ? 'selected' : '' }}>हिन्दी</option>
+                    </select>
+                </div>
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">

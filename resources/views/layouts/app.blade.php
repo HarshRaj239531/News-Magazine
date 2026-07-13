@@ -45,15 +45,18 @@
     <div class="top-bar-links">
         <div class="container">
             <div>
-                <a href="#main-content">Skip to main content</a>
-                <span>भारत सरकार | GOVERNMENT OF INDIA</span>
+                <a href="#main-content">{{ __('Skip to main content') }}</a>
+                <span>{{ app()->getLocale() == 'hi' ? 'भारत सरकार' : 'GOVERNMENT OF INDIA' }}</span>
             </div>
             <div class="accessibility-tools">
+                <a href="{{ route('lang.switch', 'hi') }}" style="color: {{ app()->getLocale() == 'hi' ? 'var(--accent-gold)' : '#cbd5e1' }}; font-weight: bold; margin-right: 8px;">हिन्दी</a>
+                <span style="color: #475569;">|</span>
+                <a href="{{ route('lang.switch', 'en') }}" style="color: {{ app()->getLocale() == 'en' ? 'var(--accent-gold)' : '#cbd5e1' }}; font-weight: bold; margin-left: 8px; margin-right: 15px;">English</a>
                 <button class="btn-acc" onclick="changeFontSize('sm')">A-</button>
                 <button class="btn-acc" onclick="changeFontSize('md')">A</button>
                 <button class="btn-acc" onclick="changeFontSize('lg')">A+</button>
                 <button class="btn-acc" onclick="toggleContrast()">High Contrast ◐</button>
-                <a href="/admin/login" style="margin-left: 15px; color: var(--accent-gold); font-weight: bold;">Admin Login 🔑</a>
+                <a href="/admin/login" style="margin-left: 15px; color: var(--accent-gold); font-weight: bold;">{{ __('Admin Login') }} 🔑</a>
             </div>
         </div>
     </div>
@@ -61,26 +64,18 @@
     <!-- 3. Government Branding Header -->
     <header class="main-header">
         <div class="container header-grid">
-            <div class="header-left">
-                <!-- Ashoka Emblem SVG -->
-                <svg class="emblem-img" viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M50 10 C35 10, 35 30, 50 30 C65 30, 65 10, 50 10 Z" fill="#b91c1c"/>
-                    <path d="M50 30 L50 90 M40 50 L60 50 M42 70 L58 70" stroke="#b91c1c" stroke-width="4"/>
-                    <circle cx="50" cy="98" r="8" fill="none" stroke="#1e3a8a" stroke-width="3"/>
-                    <path d="M50 90 L50 106 M42 98 L58 98" stroke="#1e3a8a" stroke-width="2"/>
-                    <rect x="25" y="106" width="50" height="8" rx="2" fill="#15803d"/>
-                    <text x="50" y="128" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a" font-family="sans-serif">सत्यमेव जयते</text>
-                </svg>
-                <div class="logo-text-block">
-                    <h1>विज्ञानमेव जयते</h1>
-                    <div class="sub-heading">VIGYANMEV JAYATE • NATIONAL SCIENTIFIC MAGAZINE OF INDIA</div>
-                    <div class="ministry-text">National Hindi-English Science & Technology Publication</div>
+            <div class="header-left" style="display: flex; align-items: center; gap: 20px;">
+                <!-- Circular Blue Website Logo -->
+                <img src="/images/logo.png" alt="Vigyanmev Logo" style="height: 85px; width: 85px; border-radius: 50%; object-fit: cover; border: 2px solid #ffffff; box-shadow: var(--shadow-sm);">
+                <div class="logo-text-block" style="padding-left: 0;">
+                    <h1>{{ __('Vigyanmev Jayate') }}</h1>
+                    <div class="sub-heading">{{ __('Vigyanmev Jayate') }} • {{ __('NATIONAL SCIENTIFIC MAGAZINE OF INDIA') }}</div>
+                    <div class="ministry-text">{{ __('National Hindi-English Science & Technology Publication') }}</div>
                 </div>
             </div>
-            <div class="header-right">
-                <div class="prgi-seal">
-                    Under PRGI Ministry of<br>Information & Broadcasting<br>Govt. of India
-                </div>
+            <div class="header-right" style="display: flex; align-items: center; gap: 20px;">
+                <!-- Circular Blue Ashoka Emblem Logo -->
+                <img src="/images/ashoka.png" alt="Ashoka Emblem" style="height: 85px; width: 85px; border-radius: 50%; object-fit: cover; display: block; border: 2px solid #ffffff; box-shadow: var(--shadow-sm);">
             </div>
         </div>
     </header>
@@ -90,89 +85,89 @@
         <div class="container">
             <ul class="nav-list">
                 <li class="nav-item">
-                    <a href="{{ route('home') }}" class="nav-link">Home</a>
+                    <a href="{{ route('home') }}" class="nav-link">{{ __('Home') }}</a>
                 </li>
                 
                 <!-- About us Dropdown -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link">About Us ▾</a>
+                    <a href="#" class="nav-link">{{ __('About Us') }} ▾</a>
                     <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="{{ route('news.detail', 'about-us') }}">Our Profile & History</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'national-parliamentary-board') }}">National Parliamentary Board</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'prime-editor') }}">Prime Editor</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'publishers') }}">Publishers Details</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'printers') }}">Printers Details</a></li>
+                        <li class="dropdown-item"><a href="{{ route('news.detail', 'about-us') }}">{{ __('Our Profile & History') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'national-parliamentary-board') }}">{{ __('National Parliamentary Board') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'prime-editor') }}">{{ __('Prime Editor') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'publishers') }}">{{ __('Publishers Details') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'printers') }}">{{ __('Printers Details') }}</a></li>
                     </ul>
                 </li>
 
                 <!-- Board & Advisors Dropdown -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Boards & Advisors ▾</a>
+                    <a href="#" class="nav-link">{{ __('Boards & Advisors') }} ▾</a>
                     <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'authorized-persons') }}">Authorized Persons</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'advocates') }}">Advocates & Legal Advisors</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'engineers') }}">AI & Software Engineers</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'translators') }}">Language Translators</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'authorized-persons') }}">{{ __('Authorized Persons') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'advocates') }}">{{ __('Advocates & Legal Advisors') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'engineers') }}">{{ __('AI & Software Engineers') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'translators') }}">{{ __('Language Translators') }}</a></li>
                     </ul>
                 </li>
 
                 <!-- Press Clubs Dropdown -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Press Clubs ▾</a>
+                    <a href="#" class="nav-link">{{ __('Press Clubs') }} ▾</a>
                     <ul class="dropdown-menu" style="max-height: 400px; overflow-y: auto;">
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'state-press-club-presidents') }}">State Press Club Presidents</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'commissionery-presidents') }}">Commissionery Presidents</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'women-press-club') }}">Women Press Club</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'district-press-club') }}">District Press Club Presidents</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'district-news-bureau') }}">District News Bureau Secretaries</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'subdivision-press-club') }}">Subdivision Press Clubs</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'block-press-club') }}">Block Press Clubs</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'panchayat-press-club') }}">Panchayat Press Clubs</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'youtubers') }}">Youtubers Press Club</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'offices') }}">Our Press Club Offices</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'state-press-club-presidents') }}">{{ __('State Press Club Presidents') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'commissionery-presidents') }}">{{ __('Commissionery Presidents') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'women-press-club') }}">{{ __('Women Press Club') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'district-press-club') }}">{{ __('District Press Club Presidents') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'district-news-bureau') }}">{{ __('District News Bureau Secretaries') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'subdivision-press-club') }}">{{ __('Subdivision Press Clubs') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'block-press-club') }}">{{ __('Block Press Clubs') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'panchayat-press-club') }}">{{ __('Panchayat Press Clubs') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'youtubers') }}">{{ __('Youtubers Press Club') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'offices') }}">{{ __('Our Press Club Offices') }}</a></li>
                     </ul>
                 </li>
 
                 <!-- News & Media Dropdown -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Media & News ▾</a>
+                    <a href="#" class="nav-link">{{ __('Media & News') }} ▾</a>
                     <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="{{ route('home') }}#news">Latest Samachar/News</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'state-news-editors') }}">State News Editors</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'news-bureau') }}">News Bureau Details</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'documentary-films') }}">Documentary Films & Cast</a></li>
+                        <li class="dropdown-item"><a href="{{ route('home') }}#news">{{ __('Latest Samachar/News') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'state-news-editors') }}">{{ __('State News Editors') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'news-bureau') }}">{{ __('News Bureau Details') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'documentary-films') }}">{{ __('Documentary Films & Cast') }}</a></li>
                     </ul>
                 </li>
 
                 <!-- Training & Education Dropdown -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Training & Education ▾</a>
+                    <a href="#" class="nav-link">{{ __('Training & Education') }} ▾</a>
                     <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'media-training') }}">Print & Electronics Training</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'social-media-training') }}">Digital Media Training Centres</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'schools-colleges') }}">Our Schools & Colleges</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'media-training') }}">{{ __('Print & Electronics Training') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'social-media-training') }}">{{ __('Digital Media Training Centres') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'schools-colleges') }}">{{ __('Our Schools & Colleges') }}</a></li>
                     </ul>
                 </li>
 
                 <!-- Publications & Members -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Publications ▾</a>
+                    <a href="#" class="nav-link">{{ __('Publications') }} ▾</a>
                     <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'e-papers-magazines') }}">E-Papers & Magazines</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'subscribers') }}">Magazine Subscribers</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'life-members') }}">Life Members & Donors</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'photos-gallery') }}">Photo Gallery</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'advertisements-gallery') }}">Advertisements Gallery</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'honours') }}">Scientific Honours</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'e-papers-magazines') }}">{{ __('E-Papers & Magazines') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'subscribers') }}">{{ __('Magazine Subscribers') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'life-members') }}">{{ __('Life Members & Donors') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'photos-gallery') }}">{{ __('Photo Gallery') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'advertisements-gallery') }}">{{ __('Advertisements Gallery') }}</a></li>
+                        <li class="dropdown-item"><a href="{{ route('directory.show', 'honours') }}">{{ __('Scientific Honours') }}</a></li>
                     </ul>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('payments') }}" class="nav-link">Payments</a>
+                    <a href="{{ route('payments') }}" class="nav-link">{{ __('Payments') }}</a>
                 </li>
                 
                 <li class="nav-item">
-                    <a href="{{ route('contact') }}" class="nav-link">Contact Us</a>
+                    <a href="{{ route('contact') }}" class="nav-link">{{ __('Contact Us') }}</a>
                 </li>
             </ul>
         </div>
@@ -218,7 +213,6 @@
         </div>
         <div class="container footer-bottom">
             <p>© {{ date('Y') }} VIGYANMEV JAYATE - विज्ञानमेव जयते. All Rights Reserved. National Hindi-English Scientific Magazine of India.</p>
-            <p>Under PRGI Ministry of Information and Broadcasting, Government of India.</p>
         </div>
     </footer>
 

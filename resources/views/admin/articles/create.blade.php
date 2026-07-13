@@ -28,7 +28,7 @@
                 <input type="text" name="title" id="title" class="form-control" placeholder="Enter article title" required value="{{ old('title') }}">
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
                 <div class="form-group">
                     <label for="category">Category / श्रेणी</label>
                     <select name="category" id="category" class="form-control" required>
@@ -46,6 +46,14 @@
                     <select name="status" id="status" class="form-control" required>
                         <option value="published" {{ old('status') == 'published' ? 'selected' : '' }}>Published (Active on Site)</option>
                         <option value="draft" {{ old('status') == 'draft' ? 'selected' : '' }}>Draft (Hidden)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="locale">Language / भाषा</label>
+                    <select name="locale" id="locale" class="form-control" required>
+                        <option value="en" {{ old('locale') == 'en' ? 'selected' : '' }}>English</option>
+                        <option value="hi" {{ old('locale') == 'hi' ? 'selected' : '' }}>हिन्दी</option>
                     </select>
                 </div>
             </div>

@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
-@section('title', $title)
+@section('title', __($title))
 
 @section('content')
 
     <div class="page-banner">
         <div class="container">
-            <h1>विज्ञानमेव जयते निर्देशिका / Directories</h1>
+            <h1>{{ __('Vigyanmev Jayate') }} {{ __('Directories') }}</h1>
             <div class="breadcrumb">
-                <a href="{{ route('home') }}">Home</a> &raquo; 
-                <span style="color: var(--accent-gold);">{{ $title }}</span>
+                <a href="{{ route('home') }}">{{ __('Home') }}</a> &raquo; 
+                <span style="color: var(--accent-gold);">{{ __($title) }}</span>
             </div>
         </div>
     </div>
@@ -18,9 +18,9 @@
         <div class="container">
             
             <div style="margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-                <h2 style="font-size: 1.5rem; border-left: 4px solid var(--accent-color); padding-left: 10px;">{{ $title }}</h2>
+                <h2 style="font-size: 1.5rem; border-left: 4px solid var(--accent-color); padding-left: 10px;">{{ __($title) }}</h2>
                 <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">
-                    Total Listings: <span style="background-color: var(--primary-color); color: white; padding: 2px 8px; border-radius: 10px; font-weight: bold;">{{ count($members) }}</span>
+                    {{ __('Total Listings') }}: <span style="background-color: var(--primary-color); color: white; padding: 2px 8px; border-radius: 10px; font-weight: bold;">{{ count($members) }}</span>
                 </div>
             </div>
 
@@ -43,7 +43,7 @@
                         </div>
                     @empty
                         <div style="grid-column: 1 / -1; text-align: center; padding: 40px; background-color: white; border-radius: 6px; border: 1px solid var(--border-color); color: var(--text-muted); font-weight: 500;">
-                            📭 No media items uploaded in this gallery yet. You can add images from the Admin Panel.
+                            📭 {{ __('No media items uploaded in this gallery yet. You can add images from the Admin Panel.') }}
                         </div>
                     @endforelse
                 </div>
@@ -54,11 +54,11 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Name / नाम</th>
-                                <th>Designation / पद</th>
-                                <th>State / राज्य</th>
-                                <th>District / जिला</th>
-                                <th>Details & Contact / संपर्क विवरण</th>
+                                <th>{{ __('Name / नाम') }}</th>
+                                <th>{{ __('Designation / पद') }}</th>
+                                <th>{{ __('State / राज्य') }}</th>
+                                <th>{{ __('District / जिला') }}</th>
+                                <th>{{ __('Details & Contact / संपर्क विवरण') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -89,7 +89,7 @@
                             @empty
                                 <tr>
                                     <td colspan="6" style="text-align: center; padding: 30px; color: var(--text-muted); font-weight: 500;">
-                                        📭 No registered members found in this category. You can add profiles from the Admin Panel.
+                                        📭 {{ __('No registered members found in this category. You can add profiles from the Admin Panel.') }}
                                     </td>
                                 </tr>
                             @endforelse
