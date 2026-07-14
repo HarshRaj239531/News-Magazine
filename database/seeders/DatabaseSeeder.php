@@ -523,5 +523,8 @@ class DatabaseSeeder extends Seeder
                 $ann
             );
         }
+
+        $this->call(NavigationMenuSeeder::class);
+        $this->call(SettingsSeeder::class);
     }
 }

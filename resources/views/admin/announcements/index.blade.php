@@ -93,8 +93,8 @@
             </table>
         </div>
 
-        <div style="margin-top: 20px;">
-            {{ $announcements->links() }}
+        <div>
+            {{ $announcements->links('partials.pagination') }}
         </div>
     </div>
 

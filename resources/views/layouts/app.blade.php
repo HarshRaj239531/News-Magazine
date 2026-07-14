@@ -81,94 +81,63 @@
     </header>
 
     <!-- 4. Navigation Menu -->
-    <nav class="main-navbar">
-        <div class="container">
-            <ul class="nav-list">
+    <nav class="main-navbar" id="main-navbar">
+        <div class="container nav-container">
+            <!-- Hamburger for mobile -->
+            <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle menu" onclick="toggleMobileMenu()">
+                <span></span><span></span><span></span>
+            </button>
+
+            <ul class="nav-list" id="nav-list">
                 <li class="nav-item">
                     <a href="{{ route('home') }}" class="nav-link">{{ __('Home') }}</a>
                 </li>
-                
-                <!-- About us Dropdown -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link">{{ __('About Us') }} ▾</a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="{{ route('news.detail', 'about-us') }}">{{ __('Our Profile & History') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'national-parliamentary-board') }}">{{ __('National Parliamentary Board') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'prime-editor') }}">{{ __('Prime Editor') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'publishers') }}">{{ __('Publishers Details') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'printers') }}">{{ __('Printers Details') }}</a></li>
-                    </ul>
-                </li>
 
-                <!-- Board & Advisors Dropdown -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link">{{ __('Boards & Advisors') }} ▾</a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'authorized-persons') }}">{{ __('Authorized Persons') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'advocates') }}">{{ __('Advocates & Legal Advisors') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'engineers') }}">{{ __('AI & Software Engineers') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'translators') }}">{{ __('Language Translators') }}</a></li>
-                    </ul>
-                </li>
+                @if(isset($navigationMenus))
+                    @foreach($navigationMenus as $menu)
+                        @php
+                            $title = app()->getLocale() == 'hi' ? $menu->title_hi : $menu->title_en;
+                        @endphp
 
-                <!-- Press Clubs Dropdown -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link">{{ __('Press Clubs') }} ▾</a>
-                    <ul class="dropdown-menu" style="max-height: 400px; overflow-y: auto;">
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'state-press-club-presidents') }}">{{ __('State Press Club Presidents') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'commissionery-presidents') }}">{{ __('Commissionery Presidents') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'women-press-club') }}">{{ __('Women Press Club') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'district-press-club') }}">{{ __('District Press Club Presidents') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'district-news-bureau') }}">{{ __('District News Bureau Secretaries') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'subdivision-press-club') }}">{{ __('Subdivision Press Clubs') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'block-press-club') }}">{{ __('Block Press Clubs') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'panchayat-press-club') }}">{{ __('Panchayat Press Clubs') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'youtubers') }}">{{ __('Youtubers Press Club') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'offices') }}">{{ __('Our Press Club Offices') }}</a></li>
-                    </ul>
-                </li>
-
-                <!-- News & Media Dropdown -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link">{{ __('Media & News') }} ▾</a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="{{ route('home') }}#news">{{ __('Latest Samachar/News') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'state-news-editors') }}">{{ __('State News Editors') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'news-bureau') }}">{{ __('News Bureau Details') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'documentary-films') }}">{{ __('Documentary Films & Cast') }}</a></li>
-                    </ul>
-                </li>
-
-                <!-- Training & Education Dropdown -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link">{{ __('Training & Education') }} ▾</a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'media-training') }}">{{ __('Print & Electronics Training') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'social-media-training') }}">{{ __('Digital Media Training Centres') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'schools-colleges') }}">{{ __('Our Schools & Colleges') }}</a></li>
-                    </ul>
-                </li>
-
-                <!-- Publications & Members -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link">{{ __('Publications') }} ▾</a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'e-papers-magazines') }}">{{ __('E-Papers & Magazines') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'subscribers') }}">{{ __('Magazine Subscribers') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'life-members') }}">{{ __('Life Members & Donors') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'photos-gallery') }}">{{ __('Photo Gallery') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'advertisements-gallery') }}">{{ __('Advertisements Gallery') }}</a></li>
-                        <li class="dropdown-item"><a href="{{ route('directory.show', 'honours') }}">{{ __('Scientific Honours') }}</a></li>
-                    </ul>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('payments') }}" class="nav-link">{{ __('Payments') }}</a>
-                </li>
-                
-                <li class="nav-item">
-                    <a href="{{ route('contact') }}" class="nav-link">{{ __('Contact Us') }}</a>
-                </li>
+                        @if($menu->type === 'parent')
+                            <li class="nav-item has-dropdown">
+                                <a href="#" class="nav-link" onclick="toggleDropdown(event, this)">{{ $title }} ▾</a>
+                                @if($menu->publishedChildren && count($menu->publishedChildren) > 0)
+                                    <ul class="dropdown-menu">
+                                        @foreach($menu->publishedChildren as $child)
+                                            @php
+                                                $childTitle = app()->getLocale() == 'hi' ? $child->title_hi : $child->title_en;
+                                                if ($child->type === 'page') {
+                                                    $childUrl = route('pages.show', $child->slug);
+                                                } elseif ($child->type === 'directory') {
+                                                    $childUrl = route('directory.show', $child->directory_category);
+                                                } else {
+                                                    $childUrl = $child->url;
+                                                }
+                                            @endphp
+                                            <li class="dropdown-item">
+                                                <a href="{{ $childUrl }}">{{ $childTitle }}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+                            </li>
+                        @else
+                            @php
+                                if ($menu->type === 'page') {
+                                    $menuUrl = route('pages.show', $menu->slug);
+                                } elseif ($menu->type === 'directory') {
+                                    $menuUrl = route('directory.show', $menu->directory_category);
+                                } else {
+                                    $menuUrl = $menu->url;
+                                }
+                            @endphp
+                            <li class="nav-item">
+                                <a href="{{ $menuUrl }}" class="nav-link">{{ $title }}</a>
+                            </li>
+                        @endif
+                    @endforeach
+                @endif
             </ul>
         </div>
     </nav>
@@ -179,57 +148,107 @@
     </main>
 
     <!-- 6. Footer Section -->
+    @php
+        use App\Models\Setting;
+        $footerAbout    = Setting::get('footer_about_text', 'National Hindi-English Scientific Magazine of India.');
+        $footerUseful   = json_decode(Setting::get('footer_useful_links', '[]'), true) ?: [];
+        $footerDirs     = json_decode(Setting::get('footer_directory_links', '[]'), true) ?: [];
+        $footerConName  = Setting::get('footer_contact_name', 'Vigyanmev Jayate Press Club Head Office');
+        $footerConCity  = Setting::get('footer_contact_city', 'New Delhi, India');
+        $footerConEmail = Setting::get('footer_contact_email', 'contact@vigyanmev.gov.in');
+        $footerConPhone = Setting::get('footer_contact_phone', '+91-11-23091122');
+        $footerCopy     = Setting::get('copyright_text', '© ' . date('Y') . ' VIGYANMEV JAYATE. All Rights Reserved.');
+        $siteName       = Setting::get('site_name', 'Vigyanmev Jayate');
+        $socialFB       = Setting::get('social_facebook', '');
+        $socialTW       = Setting::get('social_twitter', '');
+        $socialYT       = Setting::get('social_youtube', '');
+        $socialIG       = Setting::get('social_instagram', '');
+    @endphp
     <footer class="main-footer">
         <div class="container footer-grid">
             <div class="footer-widget">
-                <h4>Vigyanmev Jayate</h4>
-                <p>National Hindi-English Scientific Magazine of India, bringing the latest discoveries, technological innovations, and scientific reports in regional Indian languages.</p>
+                <h4>{{ $siteName }}</h4>
+                <p>{{ $footerAbout }}</p>
+                @if($socialFB || $socialTW || $socialYT || $socialIG)
+                    <div style="display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;">
+                        @if($socialFB)<a href="{{ $socialFB }}" target="_blank" rel="noopener" style="color: #cbd5e1; font-size: 1.4rem;">🔵</a>@endif
+                        @if($socialTW)<a href="{{ $socialTW }}" target="_blank" rel="noopener" style="color: #cbd5e1; font-size: 1.4rem;">🐦</a>@endif
+                        @if($socialYT)<a href="{{ $socialYT }}" target="_blank" rel="noopener" style="color: #cbd5e1; font-size: 1.4rem;">▶️</a>@endif
+                        @if($socialIG)<a href="{{ $socialIG }}" target="_blank" rel="noopener" style="color: #cbd5e1; font-size: 1.4rem;">📸</a>@endif
+                    </div>
+                @endif
             </div>
             <div class="footer-widget">
                 <h4>Useful Links</h4>
                 <ul class="footer-links">
-                    <li><a href="{{ route('home') }}">Home</a></li>
-                    <li><a href="{{ route('news.detail', 'about-us') }}">About Us</a></li>
-                    <li><a href="{{ route('payments') }}">Online Payments</a></li>
-                    <li><a href="{{ route('contact') }}">Contact us</a></li>
+                    @forelse($footerUseful as $link)
+                        <li><a href="{{ $link['url'] }}">{{ $link['label'] }}</a></li>
+                    @empty
+                        <li><a href="{{ route('home') }}">Home</a></li>
+                    @endforelse
                 </ul>
             </div>
             <div class="footer-widget">
                 <h4>Directories</h4>
                 <ul class="footer-links">
-                    <li><a href="{{ route('directory.show', 'national-parliamentary-board') }}">Parliamentary Board</a></li>
-                    <li><a href="{{ route('directory.show', 'advocates') }}">Legal Advisors</a></li>
-                    <li><a href="{{ route('directory.show', 'state-press-club-presidents') }}">State Press Presidents</a></li>
-                    <li><a href="{{ route('directory.show', 'engineers') }}">Software Engineers</a></li>
+                    @forelse($footerDirs as $dir)
+                        <li><a href="{{ route('directory.show', $dir['slug']) }}">{{ $dir['label'] }}</a></li>
+                    @empty
+                        <li><a href="{{ route('home') }}">Home</a></li>
+                    @endforelse
                 </ul>
             </div>
             <div class="footer-widget">
                 <h4>Contact Office</h4>
-                <p><strong>Vigyanmev Jayate Press Club Head Office</strong></p>
-                <p>New Delhi, India</p>
-                <p>Email: contact@vigyanmev.gov.in</p>
-                <p>Phone: +91-11-23091122</p>
+                <p><strong>{{ $footerConName }}</strong></p>
+                <p>{{ $footerConCity }}</p>
+                @if($footerConEmail)<p>Email: {{ $footerConEmail }}</p>@endif
+                @if($footerConPhone)<p>Phone: {{ $footerConPhone }}</p>@endif
             </div>
         </div>
         <div class="container footer-bottom">
-            <p>© {{ date('Y') }} VIGYANMEV JAYATE - विज्ञानमेव जयते. All Rights Reserved. National Hindi-English Scientific Magazine of India.</p>
+            <p>{{ $footerCopy }}</p>
         </div>
     </footer>
 
-    <!-- Accessibility JS Scripts -->
+    <!-- Accessibility + Mobile Menu JS -->
     <script>
         function changeFontSize(size) {
             document.body.classList.remove('font-sm', 'font-lg');
-            if (size === 'sm') {
-                document.body.classList.add('font-sm');
-            } else if (size === 'lg') {
-                document.body.classList.add('font-lg');
-            }
+            if (size === 'sm') document.body.classList.add('font-sm');
+            else if (size === 'lg') document.body.classList.add('font-lg');
         }
 
         function toggleContrast() {
             document.body.classList.toggle('contrast-mode');
         }
+
+        // Mobile hamburger menu
+        function toggleMobileMenu() {
+            const navList = document.getElementById('nav-list');
+            const btn = document.getElementById('hamburger-btn');
+            navList.classList.toggle('nav-open');
+            btn.classList.toggle('is-open');
+        }
+
+        // Mobile: toggle dropdowns on tap instead of hover
+        function toggleDropdown(e, el) {
+            if (window.innerWidth <= 900) {
+                e.preventDefault();
+                const li = el.closest('.has-dropdown');
+                li.classList.toggle('dropdown-open');
+            }
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const nav = document.getElementById('nav-list');
+            const btn = document.getElementById('hamburger-btn');
+            if (nav && btn && !nav.contains(e.target) && !btn.contains(e.target)) {
+                nav.classList.remove('nav-open');
+                btn.classList.remove('is-open');
+            }
+        });
     </script>
 </body>
 </html>

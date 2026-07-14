@@ -71,8 +71,14 @@
 
             <div class="form-group">
                 <label for="photo">Member Photo / फोटो (Optional)</label>
-                <input type="file" name="photo" id="photo" class="form-control">
-                <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Allowed formats: jpeg, png, jpg. Max file size: 1MB.</p>
+                <div class="animated-file-upload">
+                    <input type="file" name="photo" id="photo" accept="image/*">
+                    <div class="file-upload-placeholder">
+                        <span class="upload-icon">📁</span>
+                        <span class="upload-text">Drag & drop or click to upload member photo</span>
+                        <span class="upload-info">Allowed: jpeg, png, jpg (Max: 1MB)</span>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">

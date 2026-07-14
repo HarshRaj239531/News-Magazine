@@ -13,24 +13,24 @@
     --accent-color: #f97316;        /* Bright Orange / Saffron */
     --accent-gold: #eab308;         /* Yellow / Gold details */
     
-    --sidebar-bg: #ffffff;          /* White Sidebar */
-    --sidebar-border: #f1f5f9;
-    --sidebar-text: #64748b;
-    --sidebar-hover: #f8fafc;
-    --sidebar-hover-text: #0f172a;
+    --sidebar-bg: #e2e8f0;          /* Distinct Cool Grey Sidebar */
+    --sidebar-border: #cbd5e1;      /* Darker border for higher contrast */
+    --sidebar-text: #1e293b;        /* High contrast slate text for sidebar */
+    --sidebar-hover: #cbd5e1;       /* Darker hover background for sidebar */
+    --sidebar-hover-text: #090d16;  /* Deep dark hover text */
     
-    --body-bg: #f8fafc;             /* Slate light background */
+    --body-bg: #f1f5f9;             /* Slightly darker slate body background */
     --card-bg: #ffffff;
-    --text-dark: #0f172a;           /* Dark slate text */
-    --text-muted: #94a3b8;
-    --border-color: #f1f5f9;
-    --table-header-bg: #f8fafc;
-    --table-row-hover: #f8fafc;
+    --text-dark: #090d16;           /* Solid bold black for readable content */
+    --text-muted: #475569;          /* Dark slate-gray for subtext instead of light slate */
+    --border-color: #cbd5e1;        /* Highly visible border line colors */
+    --table-header-bg: #e2e8f0;     /* Stronger table headers */
+    --table-row-hover: #e2e8f0;
     
     /* Premium Shadows & Elevation */
-    --elevation-low: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
-    --elevation-md: 0 10px 15px -3px rgba(30, 41, 59, 0.05), 0 4px 6px -2px rgba(30, 41, 59, 0.03);
-    --elevation-lg: 0 20px 25px -5px rgba(30, 41, 59, 0.08), 0 10px 10px -5px rgba(30, 41, 59, 0.05);
+    --elevation-low: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    --elevation-md: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.05);
+    --elevation-lg: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 10px 10px -5px rgba(15, 23, 42, 0.08);
     --elevation-glow: 0 0 20px rgba(249, 115, 22, 0.08);
     
     --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -94,74 +94,179 @@ a {
 /* --- Admin Panel Layout --- */
 .admin-layout {
     display: grid;
-    grid-template-columns: 280px 1fr;
+    grid-template-columns: 280px minmax(0, 1fr);
     min-height: 100vh;
+    transition: grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* --- Modern Glassmorphism Sidebar (White by default, Carbon Dark in Dark Mode) --- */
+/* Collapsed sidebar state */
+html.sidebar-collapsed .admin-layout {
+    grid-template-columns: 70px minmax(0, 1fr);
+}
+
+/* --- Modern Glassmorphism Sidebar --- */
 .admin-sidebar {
     background-color: var(--sidebar-bg);
     color: var(--sidebar-text);
-    padding: 30px 24px;
+    padding: 0;
     display: flex;
     flex-direction: column;
     border-right: 1px solid var(--sidebar-border);
     position: sticky;
     top: 0;
     height: 100vh;
+    overflow: hidden;
     box-shadow: 4px 0 30px rgba(30, 41, 59, 0.03);
-    transition: var(--transition-smooth);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 280px;
 }
 
 body.dark-theme .admin-sidebar {
     box-shadow: 4px 0 30px rgba(0, 0, 0, 0.45);
 }
 
-.sidebar-title {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.35rem;
-    font-weight: 800;
-    color: var(--text-dark);
-    text-align: center;
-    margin-bottom: 35px;
-    border-bottom: 1px solid var(--sidebar-border);
-    padding-bottom: 20px;
-    letter-spacing: 0.5px;
+html.sidebar-collapsed .admin-sidebar {
+    width: 70px;
+}
+
+/* Sidebar header with logo + toggle button */
+.sidebar-header {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 20px 18px 16px;
+    border-bottom: 1px solid var(--sidebar-border);
+    flex-shrink: 0;
+}
+
+.sidebar-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
     gap: 10px;
+    white-space: nowrap;
+    overflow: hidden;
     transition: var(--transition-smooth);
 }
 
-.sidebar-title span {
-    font-size: 1.6rem;
+.sidebar-logo {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.sidebar-title-text {
+    transition: opacity 0.2s ease, width 0.3s ease;
+    opacity: 1;
+}
+
+html.sidebar-collapsed .sidebar-title-text {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+.sidebar-toggle-btn {
+    background: var(--sidebar-hover);
+    border: none;
+    border-radius: 6px;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    color: var(--sidebar-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: var(--transition-smooth);
+}
+
+.sidebar-toggle-btn:hover {
+    background: var(--primary-color);
+    color: white;
 }
 
 .admin-nav {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
+    padding: 16px 12px;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.nav-divider {
+    height: 1px;
+    background: var(--sidebar-border);
+    margin: 8px 4px;
 }
 
 .admin-nav-item a {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
+    gap: 12px;
+    padding: 11px 12px;
     color: var(--sidebar-text);
     border-radius: 8px;
     font-weight: 500;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
     position: relative;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+}
+
+.nav-icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    width: 22px;
+    text-align: center;
+}
+
+.nav-label {
+    flex: 1;
+    transition: opacity 0.2s ease;
+    opacity: 1;
+}
+
+html.sidebar-collapsed .nav-label,
+html.sidebar-collapsed .sidebar-badge {
+    opacity: 0;
+    width: 0;
     overflow: hidden;
 }
 
-.admin-nav-item a .nav-label {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+/* Tooltip on collapsed hover */
+html.sidebar-collapsed .admin-nav-item a {
+    justify-content: center;
+    padding: 11px 0;
+}
+
+html.sidebar-collapsed .admin-nav-item {
+    position: relative;
+}
+
+html.sidebar-collapsed .admin-nav-item:hover::after {
+    content: attr(data-label);
+    position: absolute;
+    left: 78px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--primary-color);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    z-index: 1000;
+    box-shadow: var(--elevation-md);
+    pointer-events: none;
 }
 
 .admin-nav-item a:hover {
@@ -186,14 +291,16 @@ body.dark-theme .admin-sidebar {
     color: var(--sidebar-text);
     padding: 2px 8px;
     border-radius: 20px;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 700;
+    flex-shrink: 0;
     transition: var(--transition-smooth);
+    white-space: nowrap;
 }
 
 /* --- Admin Header & Content Wrapper --- */
 .admin-main {
-    padding: 40px;
+    padding: 24px 40px 40px;
     overflow-y: auto;
 }
 
@@ -201,9 +308,9 @@ body.dark-theme .admin-sidebar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
+    margin-bottom: 25px;
     border-bottom: 1px solid var(--border-color);
-    padding-bottom: 25px;
+    padding-bottom: 15px;
 }
 
 .admin-header h2 {
@@ -425,7 +532,7 @@ body.dark-theme .admin-sidebar {
 .admin-table-wrapper {
     background-color: var(--card-bg);
     border-radius: 8px;
-    overflow: hidden;
+    overflow-x: auto;
     border: 1px solid var(--border-color);
     box-shadow: var(--elevation-low);
     transition: var(--transition-smooth);
@@ -441,7 +548,7 @@ body.dark-theme .admin-sidebar {
     background-color: var(--table-header-bg);
     color: var(--text-dark);
     font-weight: 600;
-    padding: 16px 20px;
+    padding: 14px 12px;
     font-size: 0.85rem;
     text-transform: uppercase;
     border-bottom: 2px solid var(--border-color);
@@ -449,7 +556,7 @@ body.dark-theme .admin-sidebar {
 }
 
 .admin-table td {
-    padding: 16px 20px;
+    padding: 14px 12px;
     border-bottom: 1px solid var(--border-color);
     font-size: 0.9rem;
     color: var(--text-dark);
@@ -712,5 +819,122 @@ body.dark-theme .draw-board {
     font-weight: 800;
     color: rgba(255, 255, 255, 0.7);
     font-size: 1.2rem;
+}
+
+/* Slide Up Fade Entry Animation (equivalent to initial y: 20 -> y: 0, duration: 0.4s) */
+@keyframes slideUpFade {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animated-file-upload {
+    position: relative;
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    padding: 24px;
+    background-color: var(--body-bg);
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+    animation: slideUpFade 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animated-file-upload:hover {
+    border-color: var(--primary-light);
+    background-color: rgba(59, 130, 246, 0.04);
+}
+
+.animated-file-upload input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.file-upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+}
+
+.file-upload-placeholder .upload-icon {
+    font-size: 2.2rem;
+    color: var(--primary-light);
+    transition: var(--transition-smooth);
+}
+
+.animated-file-upload:hover .file-upload-placeholder .upload-icon {
+    transform: scale(1.1);
+}
+
+.file-upload-placeholder .upload-text {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+}
+
+.file-upload-placeholder .upload-info {
+    font-size: 0.75rem;
+}
+
+/* Fix massive Laravel pagination arrows & style paginator */
+nav[role="navigation"] svg {
+    width: 18px !important;
+    height: 18px !important;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+nav[role="navigation"] .flex {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+nav[role="navigation"] p {
+    margin-bottom: 0;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+nav[role="navigation"] a,
+nav[role="navigation"] span {
+    padding: 6px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--card-bg);
+    color: var(--text-dark);
+    font-size: 0.85rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+}
+
+nav[role="navigation"] a:hover {
+    background-color: var(--sidebar-hover);
+    color: var(--primary-color);
+    border-color: var(--primary-light);
+}
+
+nav[role="navigation"] span[aria-current="page"] {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    font-weight: bold;
 }
 

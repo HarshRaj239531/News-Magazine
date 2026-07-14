@@ -6,59 +6,98 @@
     <title>Admin Panel - VIGYANMEV JAYATE</title>
     <link rel="stylesheet" href="/css/admin.css">
     <script>
-        // Immediate execution to prevent theme flicker
+        // Immediate execution to prevent theme + sidebar flicker
         if (localStorage.getItem('admin-theme') === 'dark') {
             document.documentElement.classList.add('dark-theme');
-        } else {
-            document.documentElement.classList.remove('dark-theme');
+        }
+        if (localStorage.getItem('admin-sidebar') === 'collapsed') {
+            document.documentElement.classList.add('sidebar-collapsed');
         }
     </script>
 </head>
 <body>
 
-    <div class="admin-layout">
-        
-        <!-- Sidebar (White in light mode, Charcoal in dark mode) -->
-        <aside class="admin-sidebar">
-            <div class="sidebar-title">
-                <span>🔬</span> VIGYANMEV
+    <div class="admin-layout" id="admin-layout">
+
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="admin-sidebar">
+
+            <!-- Sidebar Header: Logo + Collapse Toggle -->
+            <div class="sidebar-header">
+                <div class="sidebar-title">
+                    <span class="sidebar-logo">🔬</span>
+                    <span class="sidebar-title-text">VIGYANMEV</span>
+                </div>
+                <button id="sidebar-toggle" class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Toggle Sidebar">
+                    <span id="sidebar-toggle-icon">◀</span>
+                </button>
             </div>
+
             <ul class="admin-nav">
                 <li class="admin-nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                    <a href="{{ route('admin.dashboard') }}">
-                        <span class="nav-label">📊 Dashboard</span>
+                    <a href="{{ route('admin.dashboard') }}" title="Dashboard">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-label">Dashboard</span>
                     </a>
                 </li>
                 <li class="admin-nav-item {{ request()->routeIs('admin.articles.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.articles.index') }}">
-                        <span class="nav-label">📰 News / Pages</span>
+                    <a href="{{ route('admin.articles.index') }}" title="News / Pages">
+                        <span class="nav-icon">📰</span>
+                        <span class="nav-label">News / Pages</span>
                         <span class="sidebar-badge">dynamic</span>
                     </a>
                 </li>
                 <li class="admin-nav-item {{ request()->routeIs('admin.members.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.members.index') }}">
-                        <span class="nav-label">👥 Directories</span>
+                    <a href="{{ route('admin.members.index') }}" title="Directories">
+                        <span class="nav-icon">👥</span>
+                        <span class="nav-label">Directories</span>
                         <span class="sidebar-badge">37 lists</span>
                     </a>
                 </li>
                 <li class="admin-nav-item {{ request()->routeIs('admin.slides.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.slides.index') }}">
-                        <span class="nav-label">🖼️ Slider Manager</span>
+                    <a href="{{ route('admin.slides.index') }}" title="Slider Manager">
+                        <span class="nav-icon">🖼️</span>
+                        <span class="nav-label">Slider Manager</span>
                     </a>
                 </li>
                 <li class="admin-nav-item {{ request()->routeIs('admin.announcements.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.announcements.index') }}">
-                        <span class="nav-label">📢 "What's New" Manager</span>
+                    <a href="{{ route('admin.announcements.index') }}" title="What's New Manager">
+                        <span class="nav-icon">📢</span>
+                        <span class="nav-label">"What's New" Manager</span>
                     </a>
                 </li>
-                <li class="admin-nav-item" style="margin-top: 30px; border-top: 1px solid var(--border-color); padding-top: 15px;">
-                    <a href="{{ route('home') }}" target="_blank">
-                        <span class="nav-label">🌐 View Website</span>
+                <li class="admin-nav-item {{ request()->routeIs('admin.navigation.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.navigation.index') }}" title="Navbar & Pages">
+                        <span class="nav-icon">🗺️</span>
+                        <span class="nav-label">Navbar & Pages</span>
+                        <span class="sidebar-badge" style="background-color: var(--accent-color); color: white;">builder</span>
+                    </a>
+                </li>
+
+                <!-- Settings (divider) -->
+                <li class="nav-divider"></li>
+
+                <li class="admin-nav-item {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.settings.index') }}" title="Site Settings">
+                        <span class="nav-icon">⚙️</span>
+                        <span class="nav-label">Site Settings</span>
+                        <span class="sidebar-badge" style="background-color: #7c3aed; color: white;">new</span>
+                    </a>
+                </li>
+
+                <!-- Bottom actions -->
+                <li class="nav-divider" style="margin-top: auto;"></li>
+
+                <li class="admin-nav-item">
+                    <a href="{{ route('home') }}" target="_blank" title="View Website">
+                        <span class="nav-icon">🌐</span>
+                        <span class="nav-label">View Website</span>
                     </a>
                 </li>
                 <li class="admin-nav-item">
-                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="color: #ef4444;">
-                        <span class="nav-label">🚪 Logout</span>
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="color: #ef4444;" title="Logout">
+                        <span class="nav-icon">🚪</span>
+                        <span class="nav-label">Logout</span>
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
@@ -98,35 +137,52 @@
 
     </div>
 
-    <!-- Theme Switch Script -->
     <script>
-        const themeToggle = document.getElementById('theme-toggle');
+        /* ---- THEME TOGGLE ---- */
+        const themeToggle     = document.getElementById('theme-toggle');
         const themeToggleIcon = document.getElementById('theme-toggle-icon');
         const themeToggleText = document.getElementById('theme-toggle-text');
-        const htmlElement = document.documentElement;
+        const htmlElement     = document.documentElement;
 
-        // Apply visual state on toggle button based on active storage theme
         function updateToggleButtonState(isDark) {
-            if (isDark) {
-                themeToggleIcon.textContent = '☀️';
-                themeToggleText.textContent = 'Light Mode';
-            } else {
-                themeToggleIcon.textContent = '🌙';
-                themeToggleText.textContent = 'Dark Mode';
-            }
+            themeToggleIcon.textContent = isDark ? '☀️' : '🌙';
+            themeToggleText.textContent = isDark ? 'Light Mode' : 'Dark Mode';
         }
+        updateToggleButtonState(localStorage.getItem('admin-theme') === 'dark');
 
-        // Initialize button text & icon
-        const activeTheme = localStorage.getItem('admin-theme');
-        updateToggleButtonState(activeTheme === 'dark');
-
-        // Toggle action click handler
         themeToggle.addEventListener('click', () => {
             htmlElement.classList.toggle('dark-theme');
             const isDarkActive = htmlElement.classList.contains('dark-theme');
-            
             localStorage.setItem('admin-theme', isDarkActive ? 'dark' : 'light');
             updateToggleButtonState(isDarkActive);
+        });
+
+        /* ---- SIDEBAR COLLAPSE ---- */
+        function toggleSidebar() {
+            const isCollapsed = htmlElement.classList.toggle('sidebar-collapsed');
+            localStorage.setItem('admin-sidebar', isCollapsed ? 'collapsed' : 'expanded');
+            document.getElementById('sidebar-toggle-icon').textContent = isCollapsed ? '▶' : '◀';
+        }
+
+        // Restore toggle icon on load
+        if (localStorage.getItem('admin-sidebar') === 'collapsed') {
+            document.getElementById('sidebar-toggle-icon').textContent = '▶';
+        }
+
+        /* ---- FILE UPLOAD UI ---- */
+        document.addEventListener('change', function(e) {
+            if (e.target && e.target.type === 'file' && e.target.closest('.animated-file-upload')) {
+                let dropzone    = e.target.closest('.animated-file-upload');
+                let placeholder = dropzone.querySelector('.file-upload-placeholder');
+                if (e.target.files && e.target.files.length > 0) {
+                    let fileName = e.target.files[0].name;
+                    placeholder.querySelector('.upload-icon').textContent = '📄';
+                    placeholder.querySelector('.upload-text').textContent = 'File Selected';
+                    placeholder.querySelector('.upload-info').textContent = fileName;
+                    placeholder.querySelector('.upload-info').style.color = 'var(--primary-color)';
+                    placeholder.querySelector('.upload-info').style.fontWeight = '700';
+                }
+            }
         });
     </script>
 

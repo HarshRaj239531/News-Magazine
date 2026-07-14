@@ -61,6 +61,7 @@
             <a href="{{ route('admin.members.create') }}" class="btn-primary" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%); box-shadow: 0 4px 15px rgba(18, 43, 91, 0.15);">➕ Add Board/Club Member</a>
             <a href="{{ route('admin.slides.create') }}" class="btn-primary" style="background: linear-gradient(135deg, #059669 0%, #047857 100%); box-shadow: 0 4px 15px rgba(5, 150, 105, 0.15);">🖼️ Add Banner Slide</a>
             <a href="{{ route('admin.announcements.create') }}" class="btn-primary" style="background: linear-gradient(135deg, #d97706 0%, #b45309 100%); box-shadow: 0 4px 15px rgba(217, 119, 6, 0.15);">📢 Add What's New Notice</a>
+            <a href="{{ route('admin.navigation.create') }}" class="btn-primary" style="background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%); box-shadow: 0 4px 15px rgba(79, 70, 229, 0.15);">🗺️ Add Navbar Link & Page</a>
         </div>
     </div>
 

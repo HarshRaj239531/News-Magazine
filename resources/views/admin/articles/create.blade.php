@@ -60,19 +60,51 @@
 
             <div class="form-group">
                 <label for="image">Upload Banner Image / फोटो (Optional)</label>
-                <input type="file" name="image" id="image" class="form-control">
-                <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Allowed types: jpeg, png, jpg, gif. Max size: 2MB.</p>
+                <div class="animated-file-upload">
+                    <input type="file" name="image" id="image" accept="image/*">
+                    <div class="file-upload-placeholder">
+                        <span class="upload-icon">📁</span>
+                        <span class="upload-text">Drag & drop or click to upload banner image</span>
+                        <span class="upload-info">Allowed: jpeg, png, jpg, gif (Max: 2MB)</span>
+                    </div>
+                </div>
             </div>
 
+            <!-- Quill Editor CSS -->
+            <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
             <div class="form-group">
-                <label for="content">Article Content / लेख सामग्री</label>
-                <textarea name="content" id="content" rows="12" class="form-control" placeholder="Write or paste your article content here..." required style="resize: vertical;">{{ old('content') }}</textarea>
+                <label>Article Content / लेख सामग्री *</label>
+                <div id="editorContent" style="height: 350px; background: white; border-radius: 0 0 4px 4px;">{!! old('content') !!}</div>
+                <input type="hidden" name="content" id="content">
             </div>
 
             <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 30px; border-top: 1px solid var(--border-color); padding-top: 20px;">
                 <a href="{{ route('admin.articles.index') }}" class="btn-cancel">Cancel</a>
-                <button type="submit" class="btn-primary">Save and Publish Page</button>
+                <button type="submit" class="btn-primary" onclick="copyEditorContent()">Save and Publish Page</button>
             </div>
+
+            <!-- Quill Editor JS -->
+            <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+            <script>
+                var quill = new Quill('#editorContent', {
+                    theme: 'snow',
+                    modules: {
+                        toolbar: [
+                            [{ 'header': [1, 2, 3, 4, false] }],
+                            ['bold', 'italic', 'underline', 'strike'],
+                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            [{ 'color': [] }, { 'background': [] }],
+                            [{ 'align': [] }],
+                            ['link', 'image', 'clean']
+                        ]
+                    }
+                });
+
+                function copyEditorContent() {
+                    document.getElementById('content').value = quill.root.innerHTML;
+                }
+            </script>
 
         </form>
     </div>

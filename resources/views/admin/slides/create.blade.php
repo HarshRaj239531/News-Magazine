@@ -75,8 +75,14 @@
 
             <div class="form-group">
                 <label for="image">Upload Slide Image / स्लाइड चित्र</label>
-                <input type="file" name="image" id="image" class="form-control" required>
-                <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Allowed types: jpeg, png, jpg, gif. Recommended aspect ratio: 16:9 or similar (e.g. 1920x800). Max size: 5MB.</p>
+                <div class="animated-file-upload">
+                    <input type="file" name="image" id="image" accept="image/*" required>
+                    <div class="file-upload-placeholder">
+                        <span class="upload-icon">📁</span>
+                        <span class="upload-text">Drag & drop or click to upload slide graphic</span>
+                        <span class="upload-info">Allowed: jpeg, png, jpg, gif (Max: 5MB)</span>
+                    </div>
+                </div>
             </div>
 
             <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 30px; border-top: 1px solid var(--border-color); padding-top: 20px;">

@@ -70,8 +70,8 @@
             </table>
         </div>
 
-        <div style="margin-top: 20px;">
-            {{ $slides->links() }}
+        <div>
+            {{ $slides->links('partials.pagination') }}
         </div>
     </div>
 

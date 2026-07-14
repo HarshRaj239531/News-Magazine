@@ -1197,4 +1197,205 @@ body.contrast-mode .slider-dots .dot.active {
     .arrow-next { right: 10px; }
 }
 
+/* ========================================================
+   HAMBURGER MENU BUTTON (hidden on desktop)
+   ======================================================== */
+.nav-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
 
+.hamburger-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    margin-left: auto;
+    z-index: 1100;
+}
+
+.hamburger-btn span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: var(--transition);
+    transform-origin: center;
+}
+
+/* Animated X when open */
+.hamburger-btn.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger-btn.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger-btn.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ========================================================
+   TABLET BREAKPOINT (≤ 1024px)
+   ======================================================== */
+@media (max-width: 1024px) {
+    /* Header */
+    .logo-text-block h1 { font-size: 1.5rem; }
+    .header-grid { gap: 10px; }
+
+    /* Nav */
+    .nav-link { padding: 14px 12px; font-size: 0.82rem; }
+
+    /* Article grid */
+    .news-grid { grid-template-columns: repeat(2, 1fr); }
+
+    /* Footer */
+    .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+}
+
+/* ========================================================
+   MOBILE BREAKPOINT (≤ 900px)
+   ======================================================== */
+@media (max-width: 900px) {
+
+    /* --- Top bar: hide accessibility tools on very small screens --- */
+    .top-bar-links .accessibility-tools { display: none; }
+    .top-bar-links .container { justify-content: center; }
+
+    /* --- Header: stack logo and emblem --- */
+    .main-header { padding: 14px 0; }
+    .header-grid { flex-direction: row; justify-content: space-between; }
+    .logo-text-block h1 { font-size: 1.2rem; }
+    .logo-text-block .sub-heading { font-size: 0.72rem; }
+    .logo-text-block .ministry-text { display: none; }
+
+    /* --- Hamburger: show on mobile --- */
+    .hamburger-btn { display: flex; }
+
+    /* --- Nav list: hidden by default, slide down on open --- */
+    .main-navbar { position: sticky; top: 0; z-index: 1000; }
+
+    .nav-list {
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        background-color: var(--primary-color);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 999;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+        animation: slideDown 0.25s ease;
+    }
+
+    .nav-list.nav-open { display: flex; }
+
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .nav-link {
+        padding: 14px 20px;
+        font-size: 0.9rem;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* --- Dropdown: stacked on mobile --- */
+    .dropdown-menu {
+        position: static;
+        opacity: 1;
+        visibility: hidden;
+        max-height: 0;
+        overflow: hidden;
+        box-shadow: none;
+        border-radius: 0;
+        background: rgba(0,0,0,0.2);
+        transition: max-height 0.3s ease, visibility 0s 0.3s;
+        min-width: auto;
+        transform: none;
+    }
+
+    .has-dropdown.dropdown-open > .dropdown-menu {
+        visibility: visible;
+        max-height: 500px;
+        transition: max-height 0.35s ease;
+    }
+
+    .dropdown-item a {
+        color: #cbd5e1 !important;
+        padding: 10px 30px;
+        font-size: 0.85rem;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .dropdown-item a:hover { color: var(--accent-gold) !important; }
+
+    /* --- Hero/Slider --- */
+    .hero-section, .slider-section { min-height: 260px; }
+    .slide-heading { font-size: 1.5rem; }
+    .slide-description { font-size: 0.85rem; }
+
+    /* --- Main content layout --- */
+    .content-layout,
+    .main-content-area {
+        grid-template-columns: 1fr !important;
+        flex-direction: column;
+    }
+
+    .sidebar-panel {
+        order: 2;
+        margin-top: 20px;
+    }
+
+    /* --- News grid: 1 column --- */
+    .news-grid { grid-template-columns: 1fr; }
+
+    /* --- Footer: single column --- */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        text-align: center;
+    }
+    .footer-links { text-align: center; }
+
+    /* --- Sections padding --- */
+    .section-block,
+    .page-section { padding: 24px 0; }
+
+    /* --- Tables: horizontal scroll --- */
+    .data-table-wrapper { overflow-x: auto; }
+    .data-table { min-width: 600px; }
+
+    /* --- Payments/Contact grids --- */
+    .payment-card,
+    .contact-grid { grid-template-columns: 1fr !important; }
+
+    /* --- Directory listing --- */
+    .directory-grid,
+    .member-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ========================================================
+   SMALL MOBILE BREAKPOINT (≤ 480px)
+   ======================================================== */
+@media (max-width: 480px) {
+    .container { padding: 0 14px; }
+
+    .logo-text-block h1 { font-size: 1rem; }
+    .logo-text-block .sub-heading { font-size: 0.65rem; }
+
+    /* Top bar: hide on tiny screens */
+    .top-bar-links { display: none; }
+
+    /* Header emblem smaller */
+    .main-header img { height: 55px !important; width: 55px !important; }
+
+    /* Full-width buttons */
+    .btn-primary,
+    .btn-secondary { width: 100%; text-align: center; }
+
+    /* Announcement marquee */
+    .news-marquee-section { font-size: 0.8rem; }
+}

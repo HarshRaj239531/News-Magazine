@@ -153,4 +153,20 @@ class FrontendController extends Controller
             'advertisements-gallery' => 'Advertisement Gallery - विज्ञापन गैलरी',
         ];
     }
+
+    /**
+     * Show a dynamic page built by the administrator.
+     */
+    public function showPage($slug)
+    {
+        $page = \App\Models\NavigationMenu::where('slug', $slug)
+            ->where('status', 'published')
+            ->firstOrFail();
+
+        if ($page->type !== 'page') {
+            abort(404, 'Page not found');
+        }
+
+        return view('page-detail', compact('page'));
+    }
 }

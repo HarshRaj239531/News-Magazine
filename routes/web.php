@@ -6,6 +6,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\NavigationMenuController;
+use App\Http\Controllers\SettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +19,7 @@ Route::get('/news/{slug}', [FrontendController::class, 'newsDetail'])->name('new
 Route::get('/directories/{category}', [FrontendController::class, 'directory'])->name('directory.show');
 Route::get('/online-payments', [FrontendController::class, 'payments'])->name('payments');
 Route::get('/contact-us', [FrontendController::class, 'contact'])->name('contact');
+Route::get('/pages/{slug}', [FrontendController::class, 'showPage'])->name('pages.show');
 Route::get('/lang/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'hi'])) {
         session(['locale' => $locale]);
@@ -72,4 +75,16 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/announcements/{id}/edit', [AnnouncementController::class, 'edit'])->name('announcements.edit');
     Route::post('/announcements/{id}/update', [AnnouncementController::class, 'update'])->name('announcements.update');
     Route::post('/announcements/{id}/delete', [AnnouncementController::class, 'destroy'])->name('announcements.delete');
+
+    // Navigation Menu Management
+    Route::get('/navigation', [NavigationMenuController::class, 'index'])->name('navigation.index');
+    Route::get('/navigation/create', [NavigationMenuController::class, 'create'])->name('navigation.create');
+    Route::post('/navigation/store', [NavigationMenuController::class, 'store'])->name('navigation.store');
+    Route::get('/navigation/{id}/edit', [NavigationMenuController::class, 'edit'])->name('navigation.edit');
+    Route::post('/navigation/{id}/update', [NavigationMenuController::class, 'update'])->name('navigation.update');
+    Route::post('/navigation/{id}/delete', [NavigationMenuController::class, 'destroy'])->name('navigation.delete');
+
+    // Site Settings
+    Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::post('/settings/update', [SettingsController::class, 'update'])->name('settings.update');
 });

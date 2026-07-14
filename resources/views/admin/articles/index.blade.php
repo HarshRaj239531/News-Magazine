@@ -65,8 +65,8 @@
             </table>
         </div>
 
-        <div style="margin-top: 20px;">
-            {{ $articles->links() }}
+        <div>
+            {{ $articles->links('partials.pagination') }}
         </div>
     </div>
 
