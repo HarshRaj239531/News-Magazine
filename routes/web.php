@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SlideController;
+use App\Http\Controllers\AnnouncementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,4 +56,20 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/members/{id}/edit', [AdminController::class, 'memberEdit'])->name('members.edit');
     Route::post('/members/{id}/update', [AdminController::class, 'memberUpdate'])->name('members.update');
     Route::post('/members/{id}/delete', [AdminController::class, 'memberDelete'])->name('members.delete');
+
+    // Slider Items Management
+    Route::get('/slides', [SlideController::class, 'index'])->name('slides.index');
+    Route::get('/slides/create', [SlideController::class, 'create'])->name('slides.create');
+    Route::post('/slides/store', [SlideController::class, 'store'])->name('slides.store');
+    Route::get('/slides/{id}/edit', [SlideController::class, 'edit'])->name('slides.edit');
+    Route::post('/slides/{id}/update', [SlideController::class, 'update'])->name('slides.update');
+    Route::post('/slides/{id}/delete', [SlideController::class, 'destroy'])->name('slides.delete');
+
+    // Announcements / What's New Management
+    Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
+    Route::get('/announcements/create', [AnnouncementController::class, 'create'])->name('announcements.create');
+    Route::post('/announcements/store', [AnnouncementController::class, 'store'])->name('announcements.store');
+    Route::get('/announcements/{id}/edit', [AnnouncementController::class, 'edit'])->name('announcements.edit');
+    Route::post('/announcements/{id}/update', [AnnouncementController::class, 'update'])->name('announcements.update');
+    Route::post('/announcements/{id}/delete', [AnnouncementController::class, 'destroy'])->name('announcements.delete');
 });

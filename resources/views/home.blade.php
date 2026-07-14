@@ -21,18 +21,7 @@
     @endif
 
     <!-- 2. Slide Banner Section -->
-    <section class="hero-slider">
-        <div class="slide-item" style="background: linear-gradient(135deg, #132b5b 0%, #0f1e3d 100%);">
-            <div class="container">
-                <div class="slide-caption">
-                    <span class="slide-tag">{{ __('Cover Story') }}</span>
-                    <h2>{{ __('Vigyanmev Jayate') }} - विज्ञानमेव जयते</h2>
-                    <p>{{ __('National Hindi-English Science & Technology Publication') }}, promoting scientific temper and technological awareness.</p>
-                    <a href="{{ route('news.detail', 'about-us') }}" class="btn-primary">{{ __('Learn More & Explore') }}</a>
-                </div>
-            </div>
-        </div>
-    </section>
+    @include('partials.hero-slider-section')
 
     <!-- 3. Main Dashboard Grid -->
     <section class="dashboard-grid-section">

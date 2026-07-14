@@ -29,64 +29,68 @@
     <div class="admin-card">
         <h3 style="margin-bottom: 15px; color: var(--primary-color);">Directory Listings</h3>
         
-        <table class="admin-table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Photo</th>
-                    <th>Name</th>
-                    <th>Designation</th>
-                    <th>Category</th>
-                    <th>Location</th>
-                    <th>Contact Info</th>
-                    <th style="text-align: right;">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($members as $index => $member)
+        <div class="admin-table-wrapper">
+            <table class="admin-table">
+                <thead>
                     <tr>
-                        <td style="font-weight: bold; color: var(--text-muted);">{{ $members->firstItem() + $index }}</td>
-                        <td>
-                            @if($member->photo_path)
-                                <img src="{{ $member->photo_path }}" alt="" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-color);">
-                            @else
-                                <div style="width: 35px; height: 35px; border-radius: 50%; background-color: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold;">
-                                    {{ strtoupper(substr($member->name, 0, 1)) }}
+                        <th>#</th>
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Designation</th>
+                        <th>Category</th>
+                        <th>Language</th>
+                        <th>Location</th>
+                        <th>Contact Info</th>
+                        <th style="text-align: right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($members as $index => $member)
+                        <tr>
+                            <td style="font-weight: bold; color: var(--text-muted);">{{ $members->firstItem() + $index }}</td>
+                            <td>
+                                @if($member->photo_path)
+                                    <img src="{{ $member->photo_path }}" alt="" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-color);">
+                                @else
+                                    <div style="width: 35px; height: 35px; border-radius: 50%; background-color: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold;">
+                                        {{ strtoupper(substr($member->name, 0, 1)) }}
+                                    </div>
+                                @endif
+                            </td>
+                            <td style="font-weight: 700; color: var(--primary-color);">{{ $member->name }}</td>
+                            <td><span class="member-badge">{{ $member->designation }}</span></td>
+                            <td>
+                                <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">
+                                    {{ str_replace('-', ' ', $member->category) }}
+                                </span>
+                            </td>
+                            <td><span class="badge-locale">{{ $member->locale }}</span></td>
+                            <td style="font-size: 0.8rem;">
+                                {{ $member->district ? $member->district . ', ' : '' }}{{ $member->state ?? 'N/A' }}
+                            </td>
+                            <td style="font-family: monospace; font-size: 0.8rem;">
+                                {{ Str::limit($member->contact_info, 30) }}
+                            </td>
+                            <td style="text-align: right;">
+                                <div style="display: inline-flex; gap: 8px;">
+                                    <a href="{{ route('admin.members.edit', $member->id) }}" class="btn-action btn-edit">Edit</a>
+                                    <form action="{{ route('admin.members.delete', $member->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to remove this member profile?');">
+                                        @csrf
+                                        <button type="submit" class="btn-action btn-delete">Delete</button>
+                                    </form>
                                 </div>
-                            @endif
-                        </td>
-                        <td style="font-weight: 700; color: var(--primary-color);">{{ $member->name }}</td>
-                        <td><span class="member-badge">{{ $member->designation }}</span></td>
-                        <td>
-                            <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">
-                                {{ str_replace('-', ' ', $member->category) }}
-                            </span>
-                        </td>
-                        <td style="font-size: 0.8rem;">
-                            {{ $member->district ? $member->district . ', ' : '' }}{{ $member->state ?? 'N/A' }}
-                        </td>
-                        <td style="font-family: monospace; font-size: 0.8rem;">
-                            {{ Str::limit($member->contact_info, 30) }}
-                        </td>
-                        <td style="text-align: right;">
-                            <div style="display: inline-flex; gap: 8px;">
-                                <a href="{{ route('admin.members.edit', $member->id) }}" class="btn-action btn-edit">Edit</a>
-                                <form action="{{ route('admin.members.delete', $member->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to remove this member profile?');">
-                                    @csrf
-                                    <button type="submit" class="btn-action btn-delete">Delete</button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="8" style="text-align: center; padding: 30px; color: var(--text-muted); font-weight: 500;">
-                            No registered directory members found. Click "Add Member" to register a new profile.
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="9" style="text-align: center; padding: 30px; color: var(--text-muted); font-weight: 500;">
+                                No registered directory members found. Click "Add Member" to register a new profile.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
 
         <div style="margin-top: 20px;">
             {{ $members->appends(request()->input())->links() }}

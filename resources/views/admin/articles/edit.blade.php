@@ -76,7 +76,7 @@
             </div>
 
             <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 30px; border-top: 1px solid var(--border-color); padding-top: 20px;">
-                <a href="{{ route('admin.articles.index') }}" class="btn-action" style="background-color: #cbd5e1; color: #334155; padding: 10px 20px; border-radius: 4px; font-weight: bold; font-size: 0.85rem;">Cancel</a>
+                <a href="{{ route('admin.articles.index') }}" class="btn-cancel">Cancel</a>
                 <button type="submit" class="btn-primary">Update Article Details</button>
             </div>
 

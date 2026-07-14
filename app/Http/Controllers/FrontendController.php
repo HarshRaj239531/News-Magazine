@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Member;
+use App\Models\Slide;
+use App\Models\Announcement;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -41,7 +43,21 @@ class FrontendController extends Controller
             ->take(5)
             ->pluck('title');
 
-        return view('home', compact('news', 'projects', 'honours', 'ticker'));
+        // Get slides for the active locale
+        $slides = Slide::where('status', 'published')
+            ->where('locale', app()->getLocale())
+            ->orderBy('sort_order')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Get announcements for the active locale
+        $announcements = Announcement::where('status', 'published')
+            ->where('locale', app()->getLocale())
+            ->orderBy('sort_order')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('home', compact('news', 'projects', 'honours', 'ticker', 'slides', 'announcements'));
     }
 
     /**

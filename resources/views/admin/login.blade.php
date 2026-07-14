@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login - VIGYANMEV JAYATE</title>
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/admin.css">
     <style>
         body {
             background-color: var(--primary-color);
+            background-image: radial-gradient(circle at 10% 20%, rgba(18, 43, 91, 1) 0%, rgba(9, 13, 22, 1) 90.2%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -15,9 +16,9 @@
         }
         .login-card {
             background-color: white;
-            border-radius: 6px;
-            padding: 40px;
-            box-shadow: var(--shadow-lg);
+            border-radius: 12px;
+            padding: 45px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.15);
             width: 100%;
             max-width: 420px;
             border-top: 4px solid var(--accent-color);

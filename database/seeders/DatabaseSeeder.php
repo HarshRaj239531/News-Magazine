@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Article;
 use App\Models\Member;
+use App\Models\Slide;
+use App\Models\Announcement;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -375,6 +377,150 @@ class DatabaseSeeder extends Seeder
                     'locale' => $mem['locale'],
                 ],
                 $mem
+            );
+        }
+
+        // 4. Seed Slides
+        $slides = [
+            [
+                'title' => 'Bharat Innovates Initiative',
+                'subtitle' => 'The DeepTech innovation initiative of the Ministry of Education, Government of India',
+                'date' => '14-16th June 2026',
+                'location' => 'Palais des Expositions, Nice, France',
+                'image_path' => '/images/slide1_bg.png',
+                'link' => 'http://localhost',
+                'sort_order' => 1,
+                'status' => 'published',
+                'locale' => 'en',
+            ],
+            [
+                'title' => 'Space Research Summit 2026',
+                'subtitle' => 'National conference on satellite communications & space exploration technologies',
+                'date' => '22-25th August 2026',
+                'location' => 'ISRO Headquarters, Bengaluru, India',
+                'image_path' => '/images/slide2_bg.png',
+                'link' => 'http://localhost',
+                'sort_order' => 2,
+                'status' => 'published',
+                'locale' => 'en',
+            ],
+            [
+                'title' => 'भारत नवाचार पहल (Bharat Innovates)',
+                'subtitle' => 'शिक्षा मंत्रालय, भारत सरकार की डीपटेक नवाचार पहल',
+                'date' => '14-16 जून 2026',
+                'location' => 'पैलेस डेस एक्सपोजिशन, नीस, फ्रांस',
+                'image_path' => '/images/slide1_bg.png',
+                'link' => 'http://localhost',
+                'sort_order' => 1,
+                'status' => 'published',
+                'locale' => 'hi',
+            ],
+            [
+                'title' => 'अंतरिक्ष अनुसंधान शिखर सम्मेलन 2026',
+                'subtitle' => 'उपग्रह संचार और अंतरिक्ष अन्वेषण प्रौद्योगिकियों पर राष्ट्रीय सम्मेलन',
+                'date' => '22-25 अगस्त 2026',
+                'location' => 'इसरो मुख्यालय, बेंगलुरु, भारत',
+                'image_path' => '/images/slide2_bg.png',
+                'link' => 'http://localhost',
+                'sort_order' => 2,
+                'status' => 'published',
+                'locale' => 'hi',
+            ],
+        ];
+
+        foreach ($slides as $sl) {
+            Slide::updateOrCreate(
+                [
+                    'title' => $sl['title'],
+                    'locale' => $sl['locale'],
+                ],
+                $sl
+            );
+        }
+
+        // 5. Seed Announcements
+        $announcements = [
+            [
+                'title' => 'DST- JSPS call for proposal 2026 under the Indo-Japan Cooperative Science Program',
+                'link' => 'http://localhost',
+                'icon_type' => 'calendar',
+                'is_highlighted' => true,
+                'sort_order' => 1,
+                'status' => 'published',
+                'locale' => 'en',
+            ],
+            [
+                'title' => 'Results of DST- JSPS call 2025 under the Indo-Japan Cooperative Science Programme',
+                'link' => 'http://localhost',
+                'icon_type' => 'file',
+                'is_highlighted' => false,
+                'sort_order' => 2,
+                'status' => 'published',
+                'locale' => 'en',
+            ],
+            [
+                'title' => 'OM on Empanelment of retired officers as Inquiry Officers for conducting Departmental Inquiries',
+                'link' => 'http://localhost',
+                'icon_type' => 'file',
+                'is_highlighted' => false,
+                'sort_order' => 3,
+                'status' => 'published',
+                'locale' => 'en',
+            ],
+            [
+                'title' => 'Partnerships to Drive Innovation & Local Development in Space Tech',
+                'link' => 'http://localhost',
+                'icon_type' => 'star',
+                'is_highlighted' => true,
+                'sort_order' => 4,
+                'status' => 'published',
+                'locale' => 'en',
+            ],
+            [
+                'title' => 'भारत-जापान सहकारी विज्ञान कार्यक्रम के तहत प्रस्ताव 2026 के लिए डीएसटी- जेएसपीएस आमंत्रण',
+                'link' => 'http://localhost',
+                'icon_type' => 'calendar',
+                'is_highlighted' => true,
+                'sort_order' => 1,
+                'status' => 'published',
+                'locale' => 'hi',
+            ],
+            [
+                'title' => 'भारत-जापान सहकारी विज्ञान कार्यक्रम के तहत डीएसटी- जेएसपीएस आमंत्रण 2025 के परिणाम',
+                'link' => 'http://localhost',
+                'icon_type' => 'file',
+                'is_highlighted' => false,
+                'sort_order' => 2,
+                'status' => 'published',
+                'locale' => 'hi',
+            ],
+            [
+                'title' => 'विभागीय जांच के संचालन के लिए सेवानिवृत्त अधिकारियों को जांच अधिकारी के रूप में शामिल करने पर कार्यालय ज्ञापन',
+                'link' => 'http://localhost',
+                'icon_type' => 'file',
+                'is_highlighted' => false,
+                'sort_order' => 3,
+                'status' => 'published',
+                'locale' => 'hi',
+            ],
+            [
+                'title' => 'अंतरिक्ष तकनीक में नवाचार और स्थानीय विकास को बढ़ावा देने के लिए साझेदारी',
+                'link' => 'http://localhost',
+                'icon_type' => 'star',
+                'is_highlighted' => true,
+                'sort_order' => 4,
+                'status' => 'published',
+                'locale' => 'hi',
+            ],
+        ];
+
+        foreach ($announcements as $ann) {
+            Announcement::updateOrCreate(
+                [
+                    'title' => $ann['title'],
+                    'locale' => $ann['locale'],
+                ],
+                $ann
             );
         }
     }
