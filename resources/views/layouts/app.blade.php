@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'VIGYANMEV JAYATE - विज्ञानमेव जयते') | National Hindi-English Scientific Magazine of India</title>
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/app.css?v={{ time() }}">
     <style>
         /* Embedded styling helper for accessibility font resizing */
         body.font-lg { font-size: 1.15rem; }
