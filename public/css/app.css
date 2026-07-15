@@ -88,6 +88,21 @@ a:hover {
     color: var(--white);
 }
 
+.top-bar-right-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.language-switcher {
+    display: flex;
+    align-items: center;
+}
+
+.mobile-only-lang {
+    display: none !important;
+}
+
 .accessibility-tools {
     display: flex;
     align-items: center;
@@ -1349,7 +1364,9 @@ body.contrast-mode .slider-dots .dot.active {
 
     /* --- Top bar: hide accessibility tools on very small screens --- */
     .top-bar-links .accessibility-tools { display: none; }
-    .top-bar-links .container { justify-content: center; }
+    .top-bar-links .container { justify-content: space-between; }
+    .top-bar-links .skip-link { display: none; }
+    .mobile-only-lang { display: block !important; }
 
     /* --- Header: stack logo and emblem --- */
     .main-header { padding: 14px 0; }
@@ -1478,8 +1495,19 @@ body.contrast-mode .slider-dots .dot.active {
     .logo-text-block h1 { font-size: 1rem; }
     .logo-text-block .sub-heading { font-size: 0.65rem; }
 
-    /* Top bar: hide on tiny screens */
-    .top-bar-links { display: none; }
+    /* Top bar: adapt layout on tiny screens */
+    .top-bar-links {
+        display: block !important;
+        padding: 6px 0;
+    }
+    .top-bar-links .container {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+    .top-bar-links .skip-link {
+        display: none !important;
+    }
 
     /* Header emblem smaller */
     .main-header img { height: 55px !important; width: 55px !important; }

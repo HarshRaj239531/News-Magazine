@@ -44,19 +44,23 @@
     <!-- 2. Accessibility & Top Utility Bar -->
     <div class="top-bar-links">
         <div class="container">
-            <div>
-                <a href="#main-content">{{ __('Skip to main content') }}</a>
+            <div class="gov-text-section">
+                <a href="#main-content" class="skip-link">{{ __('Skip to main content') }}</a>
                 <span>{{ app()->getLocale() == 'hi' ? 'भारत सरकार' : 'GOVERNMENT OF INDIA' }}</span>
             </div>
-            <div class="accessibility-tools">
-                <a href="{{ route('lang.switch', 'hi') }}" style="color: {{ app()->getLocale() == 'hi' ? 'var(--accent-gold)' : '#cbd5e1' }}; font-weight: bold; margin-right: 8px;">हिन्दी</a>
-                <span style="color: #475569;">|</span>
-                <a href="{{ route('lang.switch', 'en') }}" style="color: {{ app()->getLocale() == 'en' ? 'var(--accent-gold)' : '#cbd5e1' }}; font-weight: bold; margin-left: 8px; margin-right: 15px;">English</a>
-                <button class="btn-acc" onclick="changeFontSize('sm')">A-</button>
-                <button class="btn-acc" onclick="changeFontSize('md')">A</button>
-                <button class="btn-acc" onclick="changeFontSize('lg')">A+</button>
-                <button class="btn-acc" onclick="toggleContrast()">High Contrast ◐</button>
-                <a href="/admin/login" style="margin-left: 15px; color: var(--accent-gold); font-weight: bold;">{{ __('Admin Login') }} 🔑</a>
+            <div class="top-bar-right-wrapper" style="display: flex; align-items: center; gap: 15px;">
+                <div class="language-switcher">
+                    <a href="{{ route('lang.switch', 'hi') }}" style="color: {{ app()->getLocale() == 'hi' ? 'var(--accent-gold)' : '#cbd5e1' }}; font-weight: bold; margin-right: 8px;">हिन्दी</a>
+                    <span style="color: #475569;">|</span>
+                    <a href="{{ route('lang.switch', 'en') }}" style="color: {{ app()->getLocale() == 'en' ? 'var(--accent-gold)' : '#cbd5e1' }}; font-weight: bold; margin-left: 8px; margin-right: 15px;">English</a>
+                </div>
+                <div class="accessibility-tools">
+                    <button class="btn-acc" onclick="changeFontSize('sm')">A-</button>
+                    <button class="btn-acc" onclick="changeFontSize('md')">A</button>
+                    <button class="btn-acc" onclick="changeFontSize('lg')">A+</button>
+                    <button class="btn-acc" onclick="toggleContrast()">High Contrast ◐</button>
+                    <a href="/admin/login" style="margin-left: 15px; color: var(--accent-gold); font-weight: bold;">{{ __('Admin Login') }} 🔑</a>
+                </div>
             </div>
         </div>
     </div>
@@ -160,6 +164,16 @@ INFORMATION AND BROADCASTING GOVERNMENT OF INDIA ]') }}</div>
                         @endif
                     @endforeach
                 @endif
+                
+                <!-- Mobile Only Language Switcher -->
+                <li class="nav-item mobile-only-lang">
+                    <div style="display: flex; gap: 15px; align-items: center; padding: 14px 20px; border-top: 1px dashed rgba(255,255,255,0.15);">
+                        <span style="color: rgba(255,255,255,0.6); font-size: 0.85rem; font-weight: 600;">{{ __('Language') }}:</span>
+                        <a href="{{ route('lang.switch', 'hi') }}" style="color: {{ app()->getLocale() == 'hi' ? 'var(--accent-gold)' : '#cbd5e1' }}; font-weight: bold; font-size: 0.95rem;">हिन्दी</a>
+                        <span style="color: rgba(255,255,255,0.3);">|</span>
+                        <a href="{{ route('lang.switch', 'en') }}" style="color: {{ app()->getLocale() == 'en' ? 'var(--accent-gold)' : '#cbd5e1' }}; font-weight: bold; font-size: 0.95rem;">English</a>
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>
