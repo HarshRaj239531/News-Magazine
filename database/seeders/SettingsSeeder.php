@@ -12,7 +12,7 @@ class SettingsSeeder extends Seeder
         // --- GENERAL SETTINGS ---
         $general = [
             'site_name'         => 'VIGYANMEV JAYATE',
-            'site_tagline'      => 'विज्ञानमेव जयते – National Hindi-English Scientific Magazine of India',
+            'site_tagline'      => 'विज्ञानमेव जयते – NATIONAL HINDI ENGLISH MONTHLY SCIENTIFIC MAGAZINE UNITED STATES OF INDIA',
             'copyright_text'    => '© ' . date('Y') . ' VIGYANMEV JAYATE - विज्ञानमेव जयते. All Rights Reserved.',
         ];
         foreach ($general as $key => $value) {
@@ -21,7 +21,7 @@ class SettingsSeeder extends Seeder
 
         // --- FOOTER SETTINGS ---
         $footer = [
-            'footer_about_text' => 'National Hindi-English Scientific Magazine of India, bringing the latest discoveries, technological innovations, and scientific reports in regional Indian languages.',
+            'footer_about_text' => 'NATIONAL HINDI ENGLISH MONTHLY SCIENTIFIC MAGAZINE UNITED STATES OF INDIA, bringing the latest discoveries, technological innovations, and scientific reports in regional Indian languages.',
 
             // Useful Links: JSON array of {label, url}
             'footer_useful_links' => json_encode([

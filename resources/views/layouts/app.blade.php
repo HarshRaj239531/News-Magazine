@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'VIGYANMEV JAYATE - विज्ञानमेव जयते') | National Hindi-English Scientific Magazine of India</title>
+    <title>@yield('title', 'VIGYANMEV JAYATE - विज्ञानमेव जयते') | NATIONAL HINDI ENGLISH MONTHLY SCIENTIFIC MAGAZINE UNITED STATES OF INDIA</title>
     <link rel="stylesheet" href="/css/app.css?v={{ time() }}">
     <style>
         /* Embedded styling helper for accessibility font resizing */
@@ -64,18 +64,18 @@
     <!-- 3. Government Branding Header -->
     <header class="main-header">
         <div class="container header-grid">
-            <div class="header-left" style="display: flex; align-items: center; gap: 20px;">
+            <div class="header-left" style="display: flex; align-items: center; gap: 22px;">
                 <!-- Circular Blue Website Logo -->
-                <img src="/images/logo.png" alt="Vigyanmev Logo" style="height: 85px; width: 85px; border-radius: 50%; object-fit: cover; border: 2px solid #ffffff; box-shadow: var(--shadow-sm);">
+                <img src="/images/logo.png" alt="Vigyanmev Logo" class="header-logo-img">
                 <div class="logo-text-block" style="padding-left: 0;">
                     <h1>{{ __('VIGYANMEV JAYATE') }}</h1>
-                    <div class="sub-heading">{{ __('Vigyanmev Jayate') }} • {{ __('NATIONAL SCIENTIFIC MAGAZINE OF INDIA') }}</div>
-                    <div class="ministry-text">{{ __('National Hindi-English Science & Technology Publication') }}</div>
+                    <div class="sub-heading">{{ __('Vigyanmev Jayate') }} • {{ __('NATIONAL HINDI ENGLISH MONTHLY SCIENTIFIC MAGAZINE UNITED STATES OF INDIA') }}</div>
+                    <div class="ministry-text">{{ __('[ Registrar of Newspapers for India, Ministry of Information & Broadcasting, Government of India ]') }}</div>
                 </div>
             </div>
-            <div class="header-right" style="display: flex; align-items: center; gap: 20px;">
+            <div class="header-right" style="display: flex; align-items: center; gap: 22px;">
                 <!-- Circular Blue Ashoka Emblem Logo -->
-                <img src="/images/ashoka.png" alt="Ashoka Emblem" style="height: 85px; width: 85px; border-radius: 50%; object-fit: cover; display: block; border: 2px solid #ffffff; box-shadow: var(--shadow-sm);">
+                <img src="/images/ashoka.png" alt="Ashoka Emblem" class="header-emblem-img">
             </div>
         </div>
     </header>
@@ -90,7 +90,7 @@
 
             <ul class="nav-list" id="nav-list">
                 <li class="nav-item">
-                    <a href="{{ route('home') }}" class="nav-link">{{ __('Home') }}</a>
+                    <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">{{ __('Home') }}</a>
                 </li>
 
                 @if(isset($navigationMenus))
@@ -100,8 +100,27 @@
                         @endphp
 
                         @if($menu->type === 'parent')
+                            @php
+                                $isParentActive = false;
+                                if ($menu->publishedChildren) {
+                                    foreach ($menu->publishedChildren as $child) {
+                                        $childUrl = '#';
+                                        if ($child->type === 'page') {
+                                            $childUrl = route('pages.show', $child->slug);
+                                        } elseif ($child->type === 'directory') {
+                                            $childUrl = route('directory.show', $child->directory_category);
+                                        } else {
+                                            $childUrl = $child->url;
+                                        }
+                                        if (request()->url() == url($childUrl)) {
+                                            $isParentActive = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                            @endphp
                             <li class="nav-item has-dropdown">
-                                <a href="#" class="nav-link" onclick="toggleDropdown(event, this)">{{ $title }} ▾</a>
+                                <a href="#" class="nav-link {{ $isParentActive ? 'active' : '' }}" onclick="toggleDropdown(event, this)">{{ $title }} <span class="dropdown-caret">▾</span></a>
                                 @if($menu->publishedChildren && count($menu->publishedChildren) > 0)
                                     <ul class="dropdown-menu">
                                         @foreach($menu->publishedChildren as $child)
@@ -114,9 +133,10 @@
                                                 } else {
                                                     $childUrl = $child->url;
                                                 }
+                                                $isChildActive = request()->url() == url($childUrl);
                                             @endphp
                                             <li class="dropdown-item">
-                                                <a href="{{ $childUrl }}">{{ $childTitle }}</a>
+                                                <a href="{{ $childUrl }}" style="{{ $isChildActive ? 'color: var(--accent-color); border-left: 4px solid var(--accent-gold); padding-left: 28px;' : '' }}">{{ $childTitle }}</a>
                                             </li>
                                         @endforeach
                                     </ul>
@@ -131,9 +151,10 @@
                                 } else {
                                     $menuUrl = $menu->url;
                                 }
+                                $isLinkActive = request()->url() == url($menuUrl);
                             @endphp
                             <li class="nav-item">
-                                <a href="{{ $menuUrl }}" class="nav-link">{{ $title }}</a>
+                                <a href="{{ $menuUrl }}" class="nav-link {{ $isLinkActive ? 'active' : '' }}">{{ $title }}</a>
                             </li>
                         @endif
                     @endforeach
@@ -150,7 +171,7 @@
     <!-- 6. Footer Section -->
     @php
         use App\Models\Setting;
-        $footerAbout    = Setting::get('footer_about_text', 'National Hindi-English Scientific Magazine of India.');
+        $footerAbout    = Setting::get('footer_about_text', 'NATIONAL HINDI ENGLISH MONTHLY SCIENTIFIC MAGAZINE UNITED STATES OF INDIA.');
         $footerUseful   = json_decode(Setting::get('footer_useful_links', '[]'), true) ?: [];
         $footerDirs     = json_decode(Setting::get('footer_directory_links', '[]'), true) ?: [];
         $footerConName  = Setting::get('footer_contact_name', 'Vigyanmev Jayate Press Club Head Office');
