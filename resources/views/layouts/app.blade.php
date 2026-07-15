@@ -69,8 +69,9 @@
                 <img src="/images/logo.png" alt="Vigyanmev Logo" class="header-logo-img">
                 <div class="logo-text-block" style="padding-left: 0;">
                     <h1>{{ __('VIGYANMEV JAYATE') }}</h1>
-                    <div class="sub-heading">{{ __('Vigyanmev Jayate') }} • {{ __('NATIONAL HINDI ENGLISH MONTHLY SCIENTIFIC MAGAZINE UNITED STATES OF INDIA') }}</div>
-                    <div class="ministry-text">{{ __('[ Registrar of Newspapers for India, Ministry of Information & Broadcasting, Government of India ]') }}</div>
+                    <div class="sub-heading">{{ __('NATIONAL HINDI ENGLISH MONTHLY SCIENTIFIC MAGAZINE UNITED STATES OF INDIA') }}</div>
+                    <div class="ministry-text">{{ __('[ THE PRESS REGISTRAR GENERAL OF NEWSPAPERS FOR INDIA 
+INFORMATION AND BROADCASTING GOVERNMENT OF INDIA ]') }}</div>
                 </div>
             </div>
             <div class="header-right" style="display: flex; align-items: center; gap: 22px;">
