@@ -233,6 +233,12 @@
     transition: var(--transition-smooth);
 }
 .btn-remove-row:hover { background: #dc2626; color: white; }
+@media (max-width: 768px) {
+    .link-row {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+}
 </style>
 
 <script>

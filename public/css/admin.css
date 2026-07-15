@@ -938,3 +938,142 @@ nav[role="navigation"] span[aria-current="page"] {
     font-weight: bold;
 }
 
+/* ========================================================
+   ADMIN RESPONSIVE LAYOUT (≤ 1024px)
+   ======================================================== */
+@media (max-width: 1024px) {
+    /* Main Layout Grid */
+    .admin-layout {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Sidebar Drawer Mode */
+    .admin-sidebar {
+        position: fixed !important;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 280px !important;
+        transform: translateX(-100%);
+        z-index: 1050;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 10px 0 30px rgba(0,0,0,0.25) !important;
+    }
+
+    /* When Sidebar is Opened on Mobile */
+    html.mobile-sidebar-open .admin-sidebar {
+        transform: translateX(0) !important;
+    }
+
+    /* Override collapsed settings inside drawer on mobile */
+    html.mobile-sidebar-open .nav-label,
+    html.mobile-sidebar-open .sidebar-badge {
+        opacity: 1 !important;
+        width: auto !important;
+        overflow: visible !important;
+    }
+
+    /* Hide the default collapse toggle inside sidebar header on mobile */
+    .sidebar-toggle-btn {
+        display: none !important;
+    }
+
+    /* Show hamburger button in header */
+    .mobile-nav-toggle {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Main Area padding adjustment */
+    .admin-main {
+        padding: 16px 16px 30px !important;
+    }
+
+    /* Header formatting */
+    .admin-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 15px !important;
+    }
+
+    .admin-header > div:first-child {
+        width: 100% !important;
+        justify-content: space-between !important;
+        display: flex !important;
+    }
+
+    .admin-header > div:last-child {
+        width: 100% !important;
+        justify-content: space-between !important;
+        display: flex !important;
+    }
+
+    /* Collapse stats widgets to single column */
+    .dashboard-stats {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+
+    /* Collapse category visual cards to 2 columns on mobile */
+    .category-visual-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+    }
+
+    /* Collapse all inline grid layouts dynamically to prevent page blowouts */
+    div[style*="display: grid"],
+    div[style*="display:grid"] {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+
+    /* Make flex tabs wrap cleanly */
+    div[style*="display: flex"][style*="gap: 4px"],
+    div[style*="display:flex"][style*="gap:4px"] {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+
+    /* Wrap flex rows like list headers */
+    div[style*="display: flex"][style*="justify-content: space-between"],
+    div[style*="display:flex"][style*="justify-content:space-between"] {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 15px !important;
+    }
+
+    /* Wrap form button footer bars */
+    div[style*="display: flex"][style*="justify-content: flex-end"],
+    div[style*="display:flex"][style*="justify-content:flex-end"] {
+        justify-content: flex-start !important;
+        flex-wrap: wrap !important;
+        gap: 10px !important;
+    }
+
+    .admin-card {
+        padding: 20px !important;
+        margin-bottom: 25px !important;
+    }
+}
+
+/* For very small devices (≤ 480px) */
+@media (max-width: 480px) {
+    .category-visual-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .login-card {
+        padding: 24px !important;
+        margin: 15px !important;
+        box-shadow: none !important;
+        border: 1px solid var(--border-color) !important;
+    }
+
+    .admin-header > div:last-child {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+    }
+}
+

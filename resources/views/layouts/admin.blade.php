@@ -109,9 +109,14 @@
         <!-- Main Content -->
         <main class="admin-main">
             <div class="admin-header">
-                <div>
-                    <h2>@yield('header_title', 'Admin Dashboard')</h2>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Welcome back, Administrator</p>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="mobile-nav-toggle" onclick="toggleMobileSidebar()" aria-label="Toggle Sidebar" style="background: var(--sidebar-bg); border: 1px solid var(--sidebar-border); border-radius: 6px; padding: 6px 10px; font-size: 1.2rem; cursor: pointer; color: var(--text-dark); display: none;">
+                        ☰
+                    </button>
+                    <div>
+                        <h2 style="margin: 0;">@yield('header_title', 'Admin Dashboard')</h2>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Welcome back, Administrator</p>
+                    </div>
                 </div>
                 <div style="display: flex; align-items: center; gap: 15px;">
                     <!-- Theme Toggle Switcher -->
@@ -157,11 +162,38 @@
             updateToggleButtonState(isDarkActive);
         });
 
-        /* ---- SIDEBAR COLLAPSE ---- */
+        /* ---- SIDEBAR COLLAPSE & MOBILE DRAWER ---- */
         function toggleSidebar() {
-            const isCollapsed = htmlElement.classList.toggle('sidebar-collapsed');
-            localStorage.setItem('admin-sidebar', isCollapsed ? 'collapsed' : 'expanded');
-            document.getElementById('sidebar-toggle-icon').textContent = isCollapsed ? '▶' : '◀';
+            if (window.innerWidth <= 1024) {
+                toggleMobileSidebar();
+            } else {
+                const isCollapsed = htmlElement.classList.toggle('sidebar-collapsed');
+                localStorage.setItem('admin-sidebar', isCollapsed ? 'collapsed' : 'expanded');
+                document.getElementById('sidebar-toggle-icon').textContent = isCollapsed ? '▶' : '◀';
+            }
+        }
+
+        function toggleMobileSidebar() {
+            const isOpen = htmlElement.classList.toggle('mobile-sidebar-open');
+            let overlay = document.getElementById('sidebar-overlay');
+            if (isOpen) {
+                if (!overlay) {
+                    overlay = document.createElement('div');
+                    overlay.id = 'sidebar-overlay';
+                    overlay.style.position = 'fixed';
+                    overlay.style.top = '0';
+                    overlay.style.left = '0';
+                    overlay.style.right = '0';
+                    overlay.style.bottom = '0';
+                    overlay.style.backgroundColor = 'rgba(0,0,0,0.5)';
+                    overlay.style.zIndex = '999';
+                    overlay.addEventListener('click', toggleMobileSidebar);
+                    document.body.appendChild(overlay);
+                }
+                overlay.style.display = 'block';
+            } else if (overlay) {
+                overlay.style.display = 'none';
+            }
         }
 
         // Restore toggle icon on load
