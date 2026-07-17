@@ -88,7 +88,34 @@
             </div>
 
             <div class="form-group">
-                <label for="contact_info">Contact & Address Details / संपर्क विवरण</label>
+                <label for="pdf">Replace PDF Document / पीडीएफ दस्तावेज (Optional)</label>
+                @if($member->pdf_path)
+                    <div style="margin-bottom: 12px; background-color: #f8fafc; border: 1px solid var(--border-color); padding: 10px 15px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.5rem;">📄</span>
+                            <div>
+                                <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-dark); display: block;">Attached PDF Document</span>
+                                <a href="{{ $member->pdf_path }}" target="_blank" style="font-size: 0.75rem; color: var(--primary-color); text-decoration: underline;">View Current PDF</a>
+                            </div>
+                        </div>
+                        <label style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: #b91c1c; cursor: pointer; margin: 0;">
+                            <input type="checkbox" name="remove_pdf" value="1" style="cursor: pointer;">
+                            ❌ Remove PDF
+                        </label>
+                    </div>
+                @endif
+                <div class="animated-file-upload">
+                    <input type="file" name="pdf" id="pdf" accept=".pdf">
+                    <div class="file-upload-placeholder">
+                        <span class="upload-icon">📄</span>
+                        <span class="upload-text">Drag & drop or click to replace PDF document</span>
+                        <span class="upload-info">Optional PDF document linked directly in directory list (Max: 100MB)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="contact_info">Contact & Address Details / संपर्क विवरण (Optional if PDF is uploaded)</label>
                 <textarea name="contact_info" id="contact_info" rows="5" class="form-control" placeholder="Email: example@gmail.com&#10;Phone: +91-9876543210&#10;Office Address details..." style="resize: vertical;">{{ old('contact_info', $member->contact_info) }}</textarea>
             </div>
 

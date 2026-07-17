@@ -82,7 +82,19 @@
             </div>
 
             <div class="form-group">
-                <label for="contact_info">Contact & Address Details / संपर्क विवरण</label>
+                <label for="pdf">Upload PDF Document / पीडीएफ दस्तावेज (Optional)</label>
+                <div class="animated-file-upload">
+                    <input type="file" name="pdf" id="pdf" accept=".pdf">
+                    <div class="file-upload-placeholder">
+                        <span class="upload-icon">📄</span>
+                        <span class="upload-text">Drag & drop or click to upload PDF document</span>
+                        <span class="upload-info">Optional PDF document linked directly in directory list (Max: 100MB)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="contact_info">Contact & Address Details / संपर्क विवरण (Optional if PDF is uploaded)</label>
                 <textarea name="contact_info" id="contact_info" rows="5" class="form-control" placeholder="Email: example@gmail.com&#10;Phone: +91-9876543210&#10;Office Address details..." style="resize: vertical;">{{ old('contact_info') }}</textarea>
             </div>
 

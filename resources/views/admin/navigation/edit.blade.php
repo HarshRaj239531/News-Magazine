@@ -23,7 +23,7 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.navigation.update', $menu->id) }}" method="POST" id="navForm">
+        <form action="{{ route('admin.navigation.update', $menu->id) }}" method="POST" id="navForm" enctype="multipart/form-data">
             @csrf
 
             <!-- Bilingual Titles -->
@@ -48,6 +48,7 @@
                         <option value="page" {{ old('type', $menu->type) == 'page' ? 'selected' : '' }}>📄 Custom Page (Page Builder)</option>
                         <option value="directory" {{ old('type', $menu->type) == 'directory' ? 'selected' : '' }}>👥 Linked Directory Member List</option>
                         <option value="url" {{ old('type', $menu->type) == 'url' ? 'selected' : '' }}>🔗 External/Custom URL Redirect</option>
+                        <option value="pdf" {{ old('type', $menu->type) == 'pdf' ? 'selected' : '' }}>📄 PDF Document - पीडीएफ दस्तावेज</option>
                     </select>
                 </div>
 
@@ -64,6 +65,34 @@
                 <div class="form-group">
                     <label for="sort_order">Sort Order / क्रम *</label>
                     <input type="number" name="sort_order" id="sort_order" class="form-control" required value="{{ old('sort_order', $menu->sort_order) }}">
+                </div>
+            </div>
+
+            <!-- PDF Upload field -->
+            <div class="form-group" id="pdfGroup" style="display: none;">
+                <label for="pdf">Upload PDF Document / पीडीएफ दस्तावेज *</label>
+                @if($menu->pdf_path)
+                    <div style="margin-bottom: 12px; background-color: #f8fafc; border: 1px solid var(--border-color); padding: 10px 15px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.5rem;">📄</span>
+                            <div>
+                                <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-dark); display: block;">Attached PDF Document</span>
+                                <a href="{{ $menu->pdf_path }}" target="_blank" style="font-size: 0.75rem; color: var(--primary-color); text-decoration: underline;">View Current PDF</a>
+                            </div>
+                        </div>
+                        <label style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: #b91c1c; cursor: pointer; margin: 0;">
+                            <input type="checkbox" name="remove_pdf" value="1" style="cursor: pointer;">
+                            ❌ Remove PDF
+                        </label>
+                    </div>
+                @endif
+                <div class="animated-file-upload">
+                    <input type="file" name="pdf" id="pdf" accept=".pdf">
+                    <div class="file-upload-placeholder">
+                        <span class="upload-icon">📄</span>
+                        <span class="upload-text">Drag & drop or click to replace PDF document</span>
+                        <span class="upload-info">PDF document linked directly (Max: 100MB)</span>
+                    </div>
                 </div>
             </div>
 
@@ -173,6 +202,7 @@
             var parentGroup = document.getElementById('parentGroup');
             var urlGroup = document.getElementById('urlGroup');
             var directoryGroup = document.getElementById('directoryGroup');
+            var pdfGroup = document.getElementById('pdfGroup');
             var layoutGroup = document.getElementById('layoutGroup');
             var contentGroup = document.getElementById('contentGroup');
 
@@ -180,8 +210,10 @@
             parentGroup.style.display = 'block';
             urlGroup.style.display = 'none';
             directoryGroup.style.display = 'none';
+            pdfGroup.style.display = 'none';
             layoutGroup.style.display = 'grid';
             contentGroup.style.display = 'block';
+            document.getElementById('pdf').required = false;
 
             if (type === 'parent') {
                 parentGroup.style.display = 'none';
@@ -201,8 +233,19 @@
                 document.getElementById('layout_type').required = false;
                 document.querySelector('#layoutGroup .form-group:first-child').style.display = 'none';
                 contentGroup.style.display = 'none';
+            } else if (type === 'pdf') {
+                pdfGroup.style.display = 'block';
+                // If it has no pdf_path, make it required
+                @if(!$menu->pdf_path)
+                    document.getElementById('pdf').required = true;
+                @endif
+                // Hide page layouts & contents
+                document.getElementById('layout_type').required = false;
+                document.querySelector('#layoutGroup .form-group:first-child').style.display = 'none';
+                contentGroup.style.display = 'none';
             } else {
                 // Page type
+                pdfGroup.style.display = 'block'; // Allow PDF attachment on dynamic pages
                 document.getElementById('layout_type').required = true;
                 document.querySelector('#layoutGroup .form-group:first-child').style.display = 'block';
                 document.getElementById('url').required = false;

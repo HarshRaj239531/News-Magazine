@@ -77,6 +77,13 @@
                 <!-- Settings (divider) -->
                 <li class="nav-divider"></li>
 
+                <li class="admin-nav-item {{ request()->routeIs('admin.dignitaries.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.dignitaries.index') }}" title="Dignitaries">
+                        <span class="nav-icon">👤</span>
+                        <span class="nav-label">Dignitaries / पदाधिकारी</span>
+                    </a>
+                </li>
+
                 <li class="admin-nav-item {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
                     <a href="{{ route('admin.settings.index') }}" title="Site Settings">
                         <span class="nav-icon">⚙️</span>

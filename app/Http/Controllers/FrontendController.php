@@ -57,7 +57,9 @@ class FrontendController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('home', compact('news', 'projects', 'honours', 'ticker', 'slides', 'announcements'));
+        $dignitaries = \App\Models\Setting::allGrouped('dignitaries');
+
+        return view('home', compact('news', 'projects', 'honours', 'ticker', 'slides', 'announcements', 'dignitaries'));
     }
 
     /**
@@ -168,5 +170,19 @@ class FrontendController extends Controller
         }
 
         return view('page-detail', compact('page'));
+    }
+
+    /**
+     * Show the embedded PDF document inside the website layout.
+     */
+    public function viewPdf(Request $request)
+    {
+        $file = $request->query('file');
+
+        if (empty($file)) {
+            abort(404, 'PDF file not specified');
+        }
+
+        return view('pdf-viewer', compact('file'));
     }
 }

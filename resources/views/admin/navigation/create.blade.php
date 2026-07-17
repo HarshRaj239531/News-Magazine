@@ -23,7 +23,7 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.navigation.store') }}" method="POST" id="navForm">
+        <form action="{{ route('admin.navigation.store') }}" method="POST" id="navForm" enctype="multipart/form-data">
             @csrf
 
             <!-- Bilingual Titles -->
@@ -48,6 +48,7 @@
                         <option value="page" {{ old('type', 'page') == 'page' ? 'selected' : '' }}>📄 Custom Page (Page Builder)</option>
                         <option value="directory" {{ old('type') == 'directory' ? 'selected' : '' }}>👥 Linked Directory Member List</option>
                         <option value="url" {{ old('type') == 'url' ? 'selected' : '' }}>🔗 External/Custom URL Redirect</option>
+                        <option value="pdf" {{ old('type') == 'pdf' ? 'selected' : '' }}>📄 PDF Document - पीडीएफ दस्तावेज</option>
                     </select>
                 </div>
 
@@ -64,6 +65,19 @@
                 <div class="form-group">
                     <label for="sort_order">Sort Order / क्रम *</label>
                     <input type="number" name="sort_order" id="sort_order" class="form-control" required value="{{ old('sort_order', 0) }}">
+                </div>
+            </div>
+
+            <!-- PDF Upload field -->
+            <div class="form-group" id="pdfGroup" style="display: none;">
+                <label for="pdf">Upload PDF Document / पीडीएफ दस्तावेज *</label>
+                <div class="animated-file-upload">
+                    <input type="file" name="pdf" id="pdf" accept=".pdf">
+                    <div class="file-upload-placeholder">
+                        <span class="upload-icon">📄</span>
+                        <span class="upload-text">Drag & drop or click to upload PDF document</span>
+                        <span class="upload-info">PDF document linked directly (Max: 100MB)</span>
+                    </div>
                 </div>
             </div>
 
@@ -173,6 +187,7 @@
             var parentGroup = document.getElementById('parentGroup');
             var urlGroup = document.getElementById('urlGroup');
             var directoryGroup = document.getElementById('directoryGroup');
+            var pdfGroup = document.getElementById('pdfGroup');
             var layoutGroup = document.getElementById('layoutGroup');
             var contentGroup = document.getElementById('contentGroup');
 
@@ -180,8 +195,10 @@
             parentGroup.style.display = 'block';
             urlGroup.style.display = 'none';
             directoryGroup.style.display = 'none';
+            pdfGroup.style.display = 'none';
             layoutGroup.style.display = 'grid';
             contentGroup.style.display = 'block';
+            document.getElementById('pdf').required = false;
 
             if (type === 'parent') {
                 parentGroup.style.display = 'none';
@@ -204,8 +221,16 @@
                 document.getElementById('layout_type').required = false;
                 document.querySelector('#layoutGroup .form-group:first-child').style.display = 'none';
                 contentGroup.style.display = 'none';
+            } else if (type === 'pdf') {
+                pdfGroup.style.display = 'block';
+                document.getElementById('pdf').required = true;
+                // Hide page layouts & contents
+                document.getElementById('layout_type').required = false;
+                document.querySelector('#layoutGroup .form-group:first-child').style.display = 'none';
+                contentGroup.style.display = 'none';
             } else {
                 // Page type
+                pdfGroup.style.display = 'block'; // Allow PDF attachment on dynamic pages
                 document.getElementById('layout_type').required = true;
                 document.querySelector('#layoutGroup .form-group:first-child').style.display = 'block';
                 document.getElementById('url').required = false;

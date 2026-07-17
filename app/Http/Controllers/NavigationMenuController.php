@@ -40,16 +40,21 @@ class NavigationMenuController extends Controller
         $validated = $request->validate([
             'title_en' => 'required|string|max:255',
             'title_hi' => 'required|string|max:255',
-            'type' => 'required|string|in:parent,page,directory,url',
+            'type' => 'required|string|in:parent,page,directory,url,pdf',
             'parent_id' => 'nullable|exists:navigation_menus,id',
             'url' => 'nullable|string|max:255',
             'directory_category' => 'nullable|string|max:255',
             'content_en' => 'nullable|string',
             'content_hi' => 'nullable|string',
-            'layout_type' => 'required|string|in:standard,grid,table',
+            'layout_type' => 'nullable|string|in:standard,grid,table',
             'sort_order' => 'required|integer',
             'status' => 'required|string|in:draft,published',
+            'pdf' => 'nullable|file|mimes:pdf|max:102400',
         ]);
+
+        if (empty($validated['layout_type'])) {
+            $validated['layout_type'] = 'standard';
+        }
 
         // Auto-generate slug if type is page
         if ($validated['type'] === 'page') {
@@ -63,6 +68,11 @@ class NavigationMenuController extends Controller
             $validated['slug'] = $slug;
         } else {
             $validated['slug'] = null;
+        }
+
+        if ($request->hasFile('pdf')) {
+            $pdfPath = $request->file('pdf')->store('navigation/pdfs', 'public');
+            $validated['pdf_path'] = '/storage/' . $pdfPath;
         }
 
         NavigationMenu::create($validated);
@@ -95,16 +105,21 @@ class NavigationMenuController extends Controller
         $validated = $request->validate([
             'title_en' => 'required|string|max:255',
             'title_hi' => 'required|string|max:255',
-            'type' => 'required|string|in:parent,page,directory,url',
+            'type' => 'required|string|in:parent,page,directory,url,pdf',
             'parent_id' => 'nullable|exists:navigation_menus,id',
             'url' => 'nullable|string|max:255',
             'directory_category' => 'nullable|string|max:255',
             'content_en' => 'nullable|string',
             'content_hi' => 'nullable|string',
-            'layout_type' => 'required|string|in:standard,grid,table',
+            'layout_type' => 'nullable|string|in:standard,grid,table',
             'sort_order' => 'required|integer',
             'status' => 'required|string|in:draft,published',
+            'pdf' => 'nullable|file|mimes:pdf|max:102400',
         ]);
+
+        if (empty($validated['layout_type'])) {
+            $validated['layout_type'] = 'standard';
+        }
 
         // Auto-generate or update slug if type is page and title has changed
         if ($validated['type'] === 'page') {
@@ -127,6 +142,22 @@ class NavigationMenuController extends Controller
             return back()->withErrors(['parent_id' => 'An item cannot be its own parent.'])->withInput();
         }
 
+        $removePdf = $request->boolean('remove_pdf');
+        if ($request->hasFile('pdf')) {
+            if ($menu->pdf_path) {
+                $oldPdfPath = str_replace('/storage/', '', $menu->pdf_path);
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($oldPdfPath);
+            }
+            $pdfPath = $request->file('pdf')->store('navigation/pdfs', 'public');
+            $validated['pdf_path'] = '/storage/' . $pdfPath;
+        } elseif ($removePdf) {
+            if ($menu->pdf_path) {
+                $oldPdfPath = str_replace('/storage/', '', $menu->pdf_path);
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($oldPdfPath);
+            }
+            $validated['pdf_path'] = null;
+        }
+
         $menu->update($validated);
 
         return redirect()->route('admin.navigation.index')->with('success', 'Navbar item updated successfully.');
@@ -138,6 +169,12 @@ class NavigationMenuController extends Controller
     public function destroy($id)
     {
         $menu = NavigationMenu::findOrFail($id);
+        
+        if ($menu->pdf_path) {
+            $oldPdfPath = str_replace('/storage/', '', $menu->pdf_path);
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($oldPdfPath);
+        }
+
         $menu->delete();
 
         return redirect()->route('admin.navigation.index')->with('success', 'Navbar item and all its children deleted successfully.');

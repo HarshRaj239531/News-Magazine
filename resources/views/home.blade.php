@@ -23,6 +23,9 @@
     <!-- 2. Slide Banner Section -->
     @include('partials.hero-slider-section')
 
+    <!-- Dignitaries & About Us Section -->
+    @include('partials.dignitaries-about')
+
     <!-- 3. Main Dashboard Grid -->
     <section class="dashboard-grid-section">
         <div class="container">

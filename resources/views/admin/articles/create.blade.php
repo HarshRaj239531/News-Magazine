@@ -70,11 +70,23 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label for="pdf">Upload PDF Document / पीडीएफ दस्तावेज (Optional)</label>
+                <div class="animated-file-upload">
+                    <input type="file" name="pdf" id="pdf" accept=".pdf">
+                    <div class="file-upload-placeholder">
+                        <span class="upload-icon">📄</span>
+                        <span class="upload-text">Drag & drop or click to upload PDF document</span>
+                        <span class="upload-info">Optional PDF document linked directly on the page (Max: 100MB)</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- Quill Editor CSS -->
             <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
             <div class="form-group">
-                <label>Article Content / लेख सामग्री *</label>
+                <label>Article Content / लेख सामग्री (Optional if PDF is uploaded)</label>
                 <div id="editorContent" style="height: 350px; background: white; border-radius: 0 0 4px 4px;">{!! old('content') !!}</div>
                 <input type="hidden" name="content" id="content">
             </div>

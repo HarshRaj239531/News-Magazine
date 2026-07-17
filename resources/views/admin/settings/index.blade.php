@@ -114,6 +114,7 @@
                     <label for="footer_contact_name">Office Name</label>
                     <input type="text" id="footer_contact_name" name="footer_contact_name" class="form-control"
                         value="{{ $footer['footer_contact_name'] ?? '' }}">
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 5px;">Use <code>\n</code> or <code>|</code> to start a new line on the webpage.</p>
                 </div>
                 <div class="form-group">
                     <label for="footer_contact_city">City / Location</label>

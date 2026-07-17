@@ -76,11 +76,38 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label for="pdf">Replace PDF Document / पीडीएफ दस्तावेज (Optional)</label>
+                @if($article->pdf_path)
+                    <div style="margin-bottom: 12px; background-color: #f8fafc; border: 1px solid var(--border-color); padding: 10px 15px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.5rem;">📄</span>
+                            <div>
+                                <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-dark); display: block;">Attached PDF Document</span>
+                                <a href="{{ $article->pdf_path }}" target="_blank" style="font-size: 0.75rem; color: var(--primary-color); text-decoration: underline;">View Current PDF</a>
+                            </div>
+                        </div>
+                        <label style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: #b91c1c; cursor: pointer; margin: 0;">
+                            <input type="checkbox" name="remove_pdf" value="1" style="cursor: pointer;">
+                            ❌ Remove PDF
+                        </label>
+                    </div>
+                @endif
+                <div class="animated-file-upload">
+                    <input type="file" name="pdf" id="pdf" accept=".pdf">
+                    <div class="file-upload-placeholder">
+                        <span class="upload-icon">📄</span>
+                        <span class="upload-text">Drag & drop or click to replace PDF document</span>
+                        <span class="upload-info">Optional PDF document linked directly on the page (Max: 100MB)</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- Quill Editor CSS -->
             <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
             <div class="form-group">
-                <label>Article Content / लेख सामग्री *</label>
+                <label>Article Content / लेख सामग्री (Optional if PDF is uploaded)</label>
                 <div id="editorContent" style="height: 350px; background: white; border-radius: 0 0 4px 4px;">{!! old('content', $article->content) !!}</div>
                 <input type="hidden" name="content" id="content">
             </div>

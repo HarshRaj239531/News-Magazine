@@ -22,6 +22,7 @@ class NavigationMenu extends Model
         'layout_type',
         'sort_order',
         'status',
+        'pdf_path',
     ];
 
     public function parent()

@@ -8,6 +8,7 @@ use App\Http\Controllers\SlideController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\NavigationMenuController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\DignitaryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,7 @@ Route::get('/directories/{category}', [FrontendController::class, 'directory'])-
 Route::get('/online-payments', [FrontendController::class, 'payments'])->name('payments');
 Route::get('/contact-us', [FrontendController::class, 'contact'])->name('contact');
 Route::get('/pages/{slug}', [FrontendController::class, 'showPage'])->name('pages.show');
+Route::get('/view-pdf', [FrontendController::class, 'viewPdf'])->name('pdf.viewer');
 Route::get('/lang/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'hi'])) {
         session(['locale' => $locale]);
@@ -87,4 +89,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // Site Settings
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::post('/settings/update', [SettingsController::class, 'update'])->name('settings.update');
+
+    // Dignitaries Section Management
+    Route::get('/dignitaries', [DignitaryController::class, 'index'])->name('dignitaries.index');
+    Route::post('/dignitaries/update', [DignitaryController::class, 'update'])->name('dignitaries.update');
 });

@@ -15,6 +15,7 @@ class Article extends Model
         'category',
         'content',
         'image_path',
+        'pdf_path',
         'status',
         'locale',
     ];

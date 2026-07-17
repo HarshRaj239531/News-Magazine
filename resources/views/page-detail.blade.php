@@ -24,11 +24,22 @@
     <section class="dynamic-page-section" style="padding: 50px 0;">
         <div class="container">
             
-            @if(empty($content))
+            @if($page->pdf_path)
+                <div style="max-width: 900px; margin: 0 auto 35px; background: rgba(37, 99, 235, 0.04); border: 1px dashed #2563eb; padding: 25px; border-radius: 8px; text-align: center;">
+                    <p style="margin-bottom: 12px; font-weight: 600; color: var(--text-dark); font-size: 1.05rem;">
+                        {{ __('This page contains a linked PDF document.') }} / {{ __('इस पृष्ठ में एक पीडीएफ दस्तावेज शामिल है।') }}
+                    </p>
+                    <a href="{{ route('pdf.viewer', ['file' => $page->pdf_path]) }}" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; padding: 12px 24px; font-weight: bold; background-color: #2563eb; border-radius: 4px; color: white;">
+                        📄 {{ __('View / Download PDF Document') }} / {{ __('पीडीएफ दस्तावेज देखें / डाउनलोड करें') }}
+                    </a>
+                </div>
+            @endif
+
+            @if(empty($content) && !$page->pdf_path)
                 <div class="article-container" style="background: white; padding: 50px; border-radius: 8px; text-align: center; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
                     <p style="font-style: italic; color: var(--text-muted);">{{ __('This page has no content yet. Add content in the Admin Panel.') }}</p>
                 </div>
-            @else
+            @elseif(!empty($content))
                 @if($page->layout_type === 'grid')
                     <!-- Grid Layout Container -->
                     <div class="dynamic-grid-layout" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px;">

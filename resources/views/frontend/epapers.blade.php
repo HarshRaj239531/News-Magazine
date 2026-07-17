@@ -32,9 +32,15 @@
                             <span class="news-date">📅 Released: {{ $epaper->created_at->format('M d, Y') }}</span>
                             <h3 style="font-size: 1.1rem; margin-bottom: 10px;">{{ $epaper->title }}</h3>
                             <p style="font-size: 0.8rem; color: #4a5568;">{{ Str::limit(strip_tags($epaper->content), 100) }}</p>
-                            <a href="{{ route('news.detail', $epaper->slug) }}" class="btn-primary" style="padding: 6px 12px; font-size: 0.75rem; text-align: center; width: 100%;">
-                                Open E-Paper Page
-                            </a>
+                            @if($epaper->pdf_path)
+                                <a href="{{ route('pdf.viewer', ['file' => $epaper->pdf_path]) }}" class="btn-primary" style="padding: 6px 12px; font-size: 0.75rem; text-align: center; width: 100%;">
+                                    Open E-Paper / ई-पेपर खोलें
+                                </a>
+                            @else
+                                <a href="{{ route('news.detail', $epaper->slug) }}" class="btn-primary" style="padding: 6px 12px; font-size: 0.75rem; text-align: center; width: 100%;">
+                                    Open E-Paper Page
+                                </a>
+                            @endif
                         </div>
                     </div>
                 @empty

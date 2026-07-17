@@ -44,6 +44,7 @@ class AdminController extends Controller
             'title' => 'required|string|max:255',
             'category' => 'required|string',
             'content' => 'required|string',
+            'pdf' => 'nullable|file|mimes:pdf|max:102400',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|string|in:draft,published',
             'locale' => 'required|string|in:en,hi',
@@ -60,6 +61,12 @@ class AdminController extends Controller
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('articles', 'public');
             $validated['image_path'] = '/storage/' . $path;
+        }
+
+        if ($request->hasFile('pdf')) {
+            $pdfFile = $request->file('pdf');
+            $pdfPath = $pdfFile->store('articles/pdfs', 'public');
+            $validated['pdf_path'] = '/storage/' . $pdfPath;
         }
 
         Article::create($validated);
@@ -81,6 +88,7 @@ class AdminController extends Controller
             'title' => 'required|string|max:255',
             'category' => 'required|string',
             'content' => 'required|string',
+            'pdf' => 'nullable|file|mimes:pdf|max:102400',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|string|in:draft,published',
             'locale' => 'required|string|in:en,hi',
@@ -105,6 +113,26 @@ class AdminController extends Controller
             $validated['image_path'] = '/storage/' . $path;
         }
 
+        $removePdf = $request->boolean('remove_pdf');
+
+        if ($request->hasFile('pdf')) {
+            // Delete old PDF if exists
+            if ($article->pdf_path) {
+                $oldPdfPath = str_replace('/storage/', '', $article->pdf_path);
+                Storage::disk('public')->delete($oldPdfPath);
+            }
+
+            $pdfFile = $request->file('pdf');
+            $pdfPath = $pdfFile->store('articles/pdfs', 'public');
+            $validated['pdf_path'] = '/storage/' . $pdfPath;
+        } elseif ($removePdf) {
+            if ($article->pdf_path) {
+                $oldPdfPath = str_replace('/storage/', '', $article->pdf_path);
+                Storage::disk('public')->delete($oldPdfPath);
+            }
+            $validated['pdf_path'] = null;
+        }
+
         $article->update($validated);
 
         return redirect()->route('admin.articles.index')->with('success', 'Article updated successfully.');
@@ -116,6 +144,10 @@ class AdminController extends Controller
         if ($article->image_path) {
             $oldPath = str_replace('/storage/', '', $article->image_path);
             Storage::disk('public')->delete($oldPath);
+        }
+        if ($article->pdf_path) {
+            $oldPdfPath = str_replace('/storage/', '', $article->pdf_path);
+            Storage::disk('public')->delete($oldPdfPath);
         }
         $article->delete();
 
@@ -155,6 +187,7 @@ class AdminController extends Controller
             'state' => 'nullable|string|max:255',
             'district' => 'nullable|string|max:255',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:1024',
+            'pdf' => 'nullable|file|mimes:pdf|max:102400',
             'contact_info' => 'nullable|string',
             'locale' => 'required|string|in:en,hi',
         ]);
@@ -162,6 +195,12 @@ class AdminController extends Controller
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('members', 'public');
             $validated['photo_path'] = '/storage/' . $path;
+        }
+
+        if ($request->hasFile('pdf')) {
+            $pdfFile = $request->file('pdf');
+            $pdfPath = $pdfFile->store('members/pdfs', 'public');
+            $validated['pdf_path'] = '/storage/' . $pdfPath;
         }
 
         Member::create($validated);
@@ -187,6 +226,7 @@ class AdminController extends Controller
             'state' => 'nullable|string|max:255',
             'district' => 'nullable|string|max:255',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:1024',
+            'pdf' => 'nullable|file|mimes:pdf|max:102400',
             'contact_info' => 'nullable|string',
             'locale' => 'required|string|in:en,hi',
         ]);
@@ -200,6 +240,25 @@ class AdminController extends Controller
             $validated['photo_path'] = '/storage/' . $path;
         }
 
+        $removePdf = $request->boolean('remove_pdf');
+
+        if ($request->hasFile('pdf')) {
+            if ($member->pdf_path) {
+                $oldPdfPath = str_replace('/storage/', '', $member->pdf_path);
+                Storage::disk('public')->delete($oldPdfPath);
+            }
+
+            $pdfFile = $request->file('pdf');
+            $pdfPath = $pdfFile->store('members/pdfs', 'public');
+            $validated['pdf_path'] = '/storage/' . $pdfPath;
+        } elseif ($removePdf) {
+            if ($member->pdf_path) {
+                $oldPdfPath = str_replace('/storage/', '', $member->pdf_path);
+                Storage::disk('public')->delete($oldPdfPath);
+            }
+            $validated['pdf_path'] = null;
+        }
+
         $member->update($validated);
 
         return redirect()->route('admin.members.index')->with('success', 'Member updated successfully.');
@@ -211,6 +270,10 @@ class AdminController extends Controller
         if ($member->photo_path) {
             $oldPath = str_replace('/storage/', '', $member->photo_path);
             Storage::disk('public')->delete($oldPath);
+        }
+        if ($member->pdf_path) {
+            $oldPdfPath = str_replace('/storage/', '', $member->pdf_path);
+            Storage::disk('public')->delete($oldPdfPath);
         }
         $member->delete();
 

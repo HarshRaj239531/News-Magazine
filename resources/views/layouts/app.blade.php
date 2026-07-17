@@ -72,13 +72,15 @@
                 <!-- Circular Blue Website Logo -->
                 <img src="/images/logo.png" alt="Vigyanmev Logo" class="header-logo-img">
                 <div class="logo-text-block" style="padding-left: 0;">
-                    <h1>{{ __('VIGYANMEV JAYATE') }}</h1>
+                    <h1>{{ app()->getLocale() == 'en' ? 'VIGYANMEV JAYATE' : '' }}@if(app()->getLocale() == 'en')<span style="font-size: 1.7rem; color: #122b5b; font-weight: 800; background: none; -webkit-text-fill-color: #122b5b; text-transform: none; margin-left: 10px; display: inline-block; vertical-align: middle;">- विज्ञानमेव जयते</span>@else{{ __('VIGYANMEV JAYATE') }}@endif</h1>
                     <div class="sub-heading">{{ __('NATIONAL HINDI ENGLISH MONTHLY SCIENTIFIC MAGAZINE UNITED STATES OF INDIA') }}</div>
                     <div class="ministry-text">{{ __('[ THE PRESS REGISTRAR GENERAL OF NEWSPAPERS FOR INDIA 
 INFORMATION AND BROADCASTING GOVERNMENT OF INDIA ]') }}</div>
                 </div>
             </div>
             <div class="header-right" style="display: flex; align-items: center; gap: 22px;">
+                <!-- Swachh Bharat Logo -->
+                <img src="/images/swachh-bharat.png" alt="Swachh Bharat" style="height: 60px; width: auto; object-fit: contain;">
                 <!-- Circular Blue Ashoka Emblem Logo -->
                 <img src="/images/ashoka.png" alt="Ashoka Emblem" class="header-emblem-img">
             </div>
@@ -135,6 +137,8 @@ INFORMATION AND BROADCASTING GOVERNMENT OF INDIA ]') }}</div>
                                                     $childUrl = route('pages.show', $child->slug);
                                                 } elseif ($child->type === 'directory') {
                                                     $childUrl = route('directory.show', $child->directory_category);
+                                                } elseif ($child->type === 'pdf') {
+                                                    $childUrl = route('pdf.viewer', ['file' => $child->pdf_path]);
                                                 } else {
                                                     $childUrl = $child->url;
                                                 }
@@ -153,6 +157,8 @@ INFORMATION AND BROADCASTING GOVERNMENT OF INDIA ]') }}</div>
                                     $menuUrl = route('pages.show', $menu->slug);
                                 } elseif ($menu->type === 'directory') {
                                     $menuUrl = route('directory.show', $menu->directory_category);
+                                } elseif ($menu->type === 'pdf') {
+                                    $menuUrl = route('pdf.viewer', ['file' => $menu->pdf_path]);
                                 } else {
                                     $menuUrl = $menu->url;
                                 }
@@ -199,6 +205,10 @@ INFORMATION AND BROADCASTING GOVERNMENT OF INDIA ]') }}</div>
         $socialTW       = Setting::get('social_twitter', '');
         $socialYT       = Setting::get('social_youtube', '');
         $socialIG       = Setting::get('social_instagram', '');
+
+        $officeNameFormatted = str_replace('\n', "\n", $footerConName);
+        $officeNameFormatted = str_replace('|', "\n", $officeNameFormatted);
+        $officeNameFormatted = preg_replace('/\s*\n\s*/', "\n", $officeNameFormatted);
     @endphp
     <footer class="main-footer">
         <div class="container footer-grid">
@@ -236,7 +246,7 @@ INFORMATION AND BROADCASTING GOVERNMENT OF INDIA ]') }}</div>
             </div>
             <div class="footer-widget">
                 <h4>Contact Office</h4>
-                <p><strong>{{ $footerConName }}</strong></p>
+                <p><strong>{!! nl2br(e($officeNameFormatted)) !!}</strong></p>
                 <p>{{ $footerConCity }}</p>
                 @if($footerConEmail)<p>Email: {{ $footerConEmail }}</p>@endif
                 @if($footerConPhone)<p>Phone: {{ $footerConPhone }}</p>@endif
