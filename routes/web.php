@@ -29,6 +29,27 @@ Route::get('/lang/{locale}', function ($locale) {
     return redirect()->back();
 })->name('lang.switch');
 
+Route::get('/run-storage-link', function () {
+    try {
+        $link = public_path('storage');
+        if (file_exists($link) || is_link($link)) {
+            if (PHP_OS === 'WINNT') {
+                if (is_dir($link)) {
+                    rmdir($link);
+                } else {
+                    unlink($link);
+                }
+            } else {
+                unlink($link);
+            }
+        }
+        \Illuminate\Support\Facades\Artisan::call('storage:link');
+        return 'Storage link created successfully!';
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+});
+
 /*
 |--------------------------------------------------------------------------
 | Admin Auth Routes
