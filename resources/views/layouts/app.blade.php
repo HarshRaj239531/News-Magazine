@@ -3,7 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'VIGYANMEV JAYATE - विज्ञानमेव जयते') | NATIONAL HINDI ENGLISH MONTHLY SCIENTIFIC MAGAZINE UNITED STATES OF INDIA</title>
+    @hasSection('title')
+        @php
+            $viewTitle = trim($__env->yieldContent('title'));
+            $siteName = \App\Models\Setting::get('site_name', config('app.name', 'Vigyanmev Jayate'));
+            if (strpos(strtolower($viewTitle), strtolower($siteName)) === false && strpos(strtolower($viewTitle), 'vigyanmev') === false) {
+                $viewTitle = $viewTitle . ' | ' . $siteName;
+            }
+            \Artesaos\SEOTools\Facades\SEOTools::setTitle($viewTitle);
+        @endphp
+    @endif
+    {!! \Artesaos\SEOTools\Facades\SEOTools::generate() !!}
     <link rel="stylesheet" href="/css/app.css?v={{ time() }}">
     <style>
         /* Embedded styling helper for accessibility font resizing */

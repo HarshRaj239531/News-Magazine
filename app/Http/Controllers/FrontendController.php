@@ -15,6 +15,17 @@ class FrontendController extends Controller
      */
     public function home()
     {
+        $siteName = \App\Models\Setting::get('site_name', config('app.name', 'Vigyanmev Jayate'));
+        $siteTagline = \App\Models\Setting::get('site_tagline', 'NATIONAL HINDI ENGLISH MONTHLY SCIENTIFIC MAGAZINE');
+        $siteDescription = \App\Models\Setting::get('footer_about_text') 
+            ? strip_tags(\App\Models\Setting::get('footer_about_text')) 
+            : config('seo.default_description', 'Professional Laravel development services');
+
+        $this->seo
+            ->setBasicSeo($siteName . ' - ' . $siteTagline, $siteDescription)
+            ->setOpenGraph($siteName, $siteDescription)
+            ->setTwitterCard($siteName, $siteDescription);
+
         $news = Article::where('category', 'news')
             ->where('status', 'published')
             ->where('locale', app()->getLocale())
@@ -68,6 +79,9 @@ class FrontendController extends Controller
     public function newsDetail($slug)
     {
         $article = Article::where('slug', $slug)->firstOrFail();
+        
+        $this->seo->setForPost($article);
+        
         return view('news-detail', compact('article'));
     }
 
@@ -83,6 +97,12 @@ class FrontendController extends Controller
         }
 
         $title = $categoryMap[$category];
+        
+        $this->seo
+            ->setBasicSeo($title)
+            ->setOpenGraph($title, $title)
+            ->setTwitterCard($title, $title);
+
         $members = Member::where('category', $category)
             ->where('locale', app()->getLocale())
             ->latest()
@@ -106,6 +126,12 @@ class FrontendController extends Controller
      */
     public function payments()
     {
+        $title = __('Online Payments Gateway');
+        $this->seo
+            ->setBasicSeo($title)
+            ->setOpenGraph($title, $title)
+            ->setTwitterCard($title, $title);
+
         return view('payments');
     }
 
@@ -114,6 +140,12 @@ class FrontendController extends Controller
      */
     public function contact()
     {
+        $title = __('Contact Us');
+        $this->seo
+            ->setBasicSeo($title)
+            ->setOpenGraph($title, $title)
+            ->setTwitterCard($title, $title);
+
         return view('contact');
     }
 
@@ -169,6 +201,16 @@ class FrontendController extends Controller
             abort(404, 'Page not found');
         }
 
+        $locale = app()->getLocale();
+        $title = $locale === 'hi' ? $page->title_hi : $page->title_en;
+        $content = $locale === 'hi' ? $page->content_hi : $page->content_en;
+        $description = $content ? strip_tags($content) : $title;
+
+        $this->seo
+            ->setBasicSeo($title, $description)
+            ->setOpenGraph($title, $description)
+            ->setTwitterCard($title, $description);
+
         return view('page-detail', compact('page'));
     }
 
@@ -182,6 +224,12 @@ class FrontendController extends Controller
         if (empty($file)) {
             abort(404, 'PDF file not specified');
         }
+
+        $title = __('PDF Document Viewer');
+        $this->seo
+            ->setBasicSeo($title)
+            ->setOpenGraph($title, $title)
+            ->setTwitterCard($title, $title);
 
         return view('pdf-viewer', compact('file'));
     }
